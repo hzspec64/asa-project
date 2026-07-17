@@ -1,0 +1,21 @@
+# Metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs
+*.log
+
+# Environment
+.env
+core/config.php
+
+# Uploads
+public/uploads/*
+!public/uploads/.keep
