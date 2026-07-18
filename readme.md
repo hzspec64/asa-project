@@ -17,6 +17,11 @@ An initiative
 - Copy file `core/config.php.example` paste into `core/config.php`
 - Adjust file content based on the database config.
 
+## Template
+
+- Front: [Charity](https://themewagon.com/themes/free-responsive-bootstrap-4-html5-charity-website-template-charity/)
+- Back: [InApp](https://themewagon.com/themes/inapp/)
+
 ## Contributors
 
 - Hamzah Abdullah ([@hzspec64](https://github.com/hzspec64))
