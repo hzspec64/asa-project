@@ -19,7 +19,7 @@ An initiative
 
 ## Templates
 
-- Front: [Charity](https://themewagon.com/themes/free-responsive-bootstrap-4-html5-charity-website-template-charity/)
+- Front: [CharityWorks](https://themewagon.com/themes/free-responsive-bootstrap-4-html5-charity-website-template-charity/)
 - Back: [InApp](https://themewagon.com/themes/inapp/)
 
 ## Contributors
