@@ -47,7 +47,7 @@
                         <!-- Logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10">
@@ -56,24 +56,24 @@
                                 <div class="main-menu d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="program.html">latest causes</a></li>
-                                            <li><a href="events.html">social events </a></li>
-                                            <li><a href="blog.html">Blog</a>
+                                            <li><a href="/">Home</a></li>
+                                            <li><a href="/about">About</a></li>
+                                            <li><a href="/program">latest causes</a></li>
+                                            <li><a href="/events">social events </a></li>
+                                            <li><a href="/blog">Blog</a>
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog_details.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Element</a></li>
+                                                    <li><a href="/blog">Blog</a></li>
+                                                    <li><a href="/blog_details">Blog Details</a></li>
+                                                    <li><a href="/elements">Element</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="/contact">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-right-btn d-none d-lg-block ml-20">
-                                    <a href="contact.html" class="btn header-btn">Donate</a>
+                                    <a href="/contact" class="btn header-btn">Donate</a>
                                 </div>
                             </div>
                         </div>
