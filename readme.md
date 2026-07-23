@@ -17,6 +17,10 @@ An initiative
 - Copy file `core/config.php.example` paste into `core/config.php`
 - Adjust file content based on the database config.
 
+### Development Preview
+
+http://asa.dev.kalih.my.id
+
 ## Templates
 
 - Frontend: [CharityWorks](https://themewagon.com/themes/free-responsive-bootstrap-4-html5-charity-website-template-charity/)
