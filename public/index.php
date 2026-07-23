@@ -8,6 +8,7 @@ $path = parse_url(
 // Exceptions that don't follow the simple "route -> pages/route.php" pattern
 $exceptions = [
     '/'        => '/index',
+    '/admin'   => '/admin/index',
     '/adminer' => '/adminer-5.4.4-mysql-en', // consider removing/renaming in production
 ];
 
