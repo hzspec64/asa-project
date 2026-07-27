@@ -1,11 +1,63 @@
 <?php
+require_once __DIR__ . '/../core/session.php';
+require_once __DIR__ . '/../core/config.php';
 require_once __DIR__ . '/../core/database.php';
+
+$isError = false;
+$errorMessage = "";
+
+$email = "";
+$password = "";
+
+$stmt = $pdo->query("SELECT COUNT(*) FROM users");
+$userCount = (int) $stmt->fetchColumn();
+
+if ($userCount === 0) {
+    header('Location: /setup');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+
+    if ($email === "") {
+        $isError = true;
+        $errorMessage = "Email can not be blank";
+    } else if ($password === "") {
+        $isError = true;
+        $errorMessage = "Password can not be blank";
+    } else {
+        $stmt = $pdo->prepare("
+            SELECT *
+            FROM users
+            WHERE email = ?
+        ");
+
+        $stmt->execute([$email]);
+
+        $user = $stmt->fetch();
+
+        if (
+            $user &&
+            password_verify($password, $user['password'])
+        ) {
+            $_SESSION['user'] = $user;
+
+            header('Location: /admin');
+            exit;
+        } else {
+            $isError = true;
+            $errorMessage = "Email and/or password is incorrect";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Signin - InApp Inventory Dashboard</title>
+        <title>Signin - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -18,41 +70,40 @@ require_once __DIR__ . '/../core/database.php';
             <div class="card " style="max-width:420px; width:100%;">
                 <div class="card-body p-5">
                     <div class="text-center mb-3">
-                        <a href="/" class="mb-4 d-inline-block"><img src="data:image/svg+xml,%3csvg%20width='62'%20height='67'%20viewBox='0%200%2062%2067'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M30.604%2066.378L0.00805664%2048.1582V35.7825L30.604%2054.0023V66.378Z'%20fill='%23302C4D'/%3e%3cpath%20d='M61.1996%2048.1582L30.604%2066.378V54.0023L61.1996%2035.7825V48.1582Z'%20fill='%23E66239'/%3e%3cpath%20d='M30.5955%200L0%2018.2198V30.5955L30.5955%2012.3757V0Z'%20fill='%23657E92'/%3e%3cpath%20d='M61.191%2018.2198L30.5955%200V12.3757L61.191%2030.5955V18.2198Z'%20fill='%23A3B2BE'/%3e%3cpath%20d='M30.604%2048.8457L0.00805664%2030.6259V18.2498L30.604%2036.47V48.8457Z'%20fill='%23302C4D'/%3e%3cpath%20d='M61.1996%2030.6259L30.604%2048.8457V36.47L61.1996%2018.2498V30.6259Z'%20fill='%23E66239'/%3e%3c/svg%3e" alt="" width="36">
-                            <span class=" ms-2"> <img src="/assets/admin/images/logo.svg" alt=""></span>
+                        <a href="/" class="mb-4 d-inline-block">
+                            <img src="/assets/admin/images/logo-asa.png" width="100"/>
                         </a>
                         <h1 class="card-title mb-5 h5">Sign in to your account</h1>
                     </div>
 
-                    <form class="needs-validation mt-3" novalidate>
+                    <?php
+                    if ($isError) {
+                    ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $errorMessage;?>
+                    </div>
+                    <?php
+                    }
+                    ?>
+
+                    <form method="post" class="needs-validation mt-3" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus>
+                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus value="<?php echo $email;?>">
                             <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label d-flex justify-content-between">
                                 <span>Password</span>
-                                <a href="#" class="small link-primary">Forgot Password?</a>
+                                <a href="#" class="small link-success">Forgot Password?</a>
                             </label>
-                            <input id="password" type="password" class="form-control" placeholder="Password" required minlength="6">
+                            <input name="password" id="password" type="password" class="form-control" placeholder="Password" required minlength="6" value="<?php echo $password;?>">
                             <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="form-check">
-                                <input id="remember" class="form-check-input" type="checkbox">
-                                <label class="form-check-label small" for="remember">Remember me</label>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                        <button class="btn btn-success w-100" type="submit">Sign in</button>
                     </form>
-
-                    <div class="text-center mt-3 small text-muted">
-                        Don't have an account? <a href="signup.html"  class="link-primary">Sign up</a>
-                    </div>
                 </div>
             </div>
         </div>

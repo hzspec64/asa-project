@@ -1,8 +1,12 @@
+<?php
+require_once __DIR__ . '/../../core/guard.php';
+require_once __DIR__ . '/../../core/database.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
             <meta charset="UTF-8" />
-            <title>Reports - InApp Inventory Dashboard</title>
+            <title>Reports - <?php echo APP_NAME;?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <?php
             require_once __DIR__ . '/../../components/admin/head_link.php';
