@@ -1,6 +1,7 @@
 <?php
 
 define('APP_NAME', 'ASA Depok - Lembaga Kemanusiaan untuk Palestina');
+define('IS_DEV', true);
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'db_name');

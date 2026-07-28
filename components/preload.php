@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/../core/session.php';
+
+$isDev = true;
+
+if (defined('IS_DEV')) {
+    $isDev = IS_DEV;
+}
+
+if ($isDev) echo '<label class="github-fork-ribbon left-top" data-ribbon="Development" title="Development">Development</label>';
+?>
+
 <!-- ? Preloader Start -->
 <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
