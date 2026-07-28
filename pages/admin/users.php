@@ -78,7 +78,7 @@ $users = $stmt->fetchAll();
                                 <p class="mb-0">Manage application users</p>
                             </div>
                             <div>
-                                <a href="/admin/users/create" class="btn btn-primary">
+                                <a href="/admin/create-user" class="btn btn-primary">
                                     Add User
                                 </a>
                             </div>
