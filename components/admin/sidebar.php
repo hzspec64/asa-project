@@ -7,6 +7,7 @@
     <ul class="nav flex-column">
         <li class="px-4 py-2"><small class="nav-text">Main</small></li>
         <li><a class="nav-link active" href="/admin/"><i class="ti ti-home"></i><span class="nav-text">Dashboard</span></a></li>
+        <li><a class="nav-link" href="/admin/users"><i class="ti ti-users"></i><span class="nav-text">Users</span></a></li>
         <li><a class="nav-link" href="/admin/inventory"><i class="ti ti-box-seam"></i><span class="nav-text">Inventory</span></a></li>
         <li><a class="nav-link" href="/admin/create-product"><i class="ti ti-plus"></i><span class="nav-text">Add Product</span></a></li>
         <li><a class="nav-link" href="/admin/reports"><i class="ti ti-receipt"></i><span class="nav-text">Reports</span></a></li>
