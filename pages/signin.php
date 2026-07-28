@@ -3,8 +3,7 @@ require_once __DIR__ . '/../core/session.php';
 require_once __DIR__ . '/../core/config.php';
 require_once __DIR__ . '/../core/database.php';
 
-$isError = false;
-$errorMessage = "";
+$errors = [];
 
 $email = "";
 $password = "";
@@ -22,12 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     if ($email === "") {
-        $isError = true;
-        $errorMessage = "Email can not be blank";
-    } else if ($password === "") {
-        $isError = true;
-        $errorMessage = "Password can not be blank";
-    } else {
+        $errors[] = "Email is required.";
+    }
+
+    if ($password === "") {
+        $errors[] = "Password is required.";
+    }
+
+    if (empty($errors)) {
         $stmt = $pdo->prepare("
             SELECT *
             FROM users
@@ -76,20 +77,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h1 class="card-title mb-5 h5">Sign in to your account</h1>
                     </div>
 
-                    <?php
-                    if ($isError) {
-                    ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $errorMessage;?>
+                    <?php if (!empty($errors)): ?>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            <?php foreach ($errors as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <?php
-                    }
-                    ?>
+                    <?php endif; ?>
 
                     <form method="post" class="needs-validation mt-3" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus value="<?php echo $email;?>">
+                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus value="<?= htmlspecialchars($email) ?>">
                             <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
 
@@ -98,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span>Password</span>
                                 <a href="#" class="small link-success">Forgot Password?</a>
                             </label>
-                            <input name="password" id="password" type="password" class="form-control" placeholder="Password" required minlength="6" value="<?php echo $password;?>">
+                            <input name="password" id="password" type="password" class="form-control" placeholder="Password" required minlength="6">
                             <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
                         </div>
 

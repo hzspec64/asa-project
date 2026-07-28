@@ -2,8 +2,7 @@
 require_once __DIR__ . '/../core/config.php';
 require_once __DIR__ . '/../core/database.php';
 
-$isError = false;
-$errorMessage = "";
+$errors = [];
 
 $name = "";
 $email = "";
@@ -23,18 +22,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmPassword = $_POST['confirm_password'];
 
     if ($name === "") {
-        $isError = true;
-        $errorMessage = "Name can not be blank";
-    } else if ($email === "") {
-        $isError = true;
-        $errorMessage = "Email can not be blank";
-    } else if ($password === "") {
-        $isError = true;
-        $errorMessage = "Password can not be blank";
-    } else if ($password !== $confirmPassword) {
-        $isError = true;
-        $errorMessage = 'Password confirmation does not match';
-    } else {
+        $errors[] = "Name is required.";
+    }
+
+    if ($email === "") {
+        $errors[] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Email is invalid.";
+    }
+
+    if ($password === "") {
+        $errors[] = "Password is required.";
+    }
+
+    if ($confirmPassword === "") {
+        $errors[] = "Confirm password is required.";
+    }
+
+    if ($password !== $confirmPassword) {
+        $errors[] = "Password confirmation does not match.";
+    }
+
+    if (empty($errors)) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $pdo->prepare("
@@ -88,25 +97,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h1 class="card-title mb-5 h5">Setup application<br/><span class="opacity-50">Create root account</span></h1>
                     </div>
 
-                    <?php
-                    if ($isError) {
-                    ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $errorMessage;?>
+                    <?php if (!empty($errors)): ?>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            <?php foreach ($errors as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <?php
-                    }
-                    ?>
+                    <?php endif; ?>
 
                     <form method="post" class="needs-validation mt-3" novalidate>
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full name</label>
-                            <input name="name" id="fullName" type="text" class="form-control" placeholder="Jane Doe" required value="<?php echo $name;?>">
+                            <input name="name" id="fullName" type="text" class="form-control" placeholder="Jane Doe" required value="<?= htmlspecialchars($name) ?>">
                             <div class="invalid-feedback">Please enter your name.</div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required value="<?php echo $email;?>">
+                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required value="<?= htmlspecialchars($email) ?>">
                             <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
                         <div class="mb-3">
