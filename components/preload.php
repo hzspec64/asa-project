@@ -7,7 +7,7 @@ if (defined('IS_DEV')) {
     $isDev = IS_DEV;
 }
 
-if ($isDev) echo '<label class="github-fork-ribbon left-top" data-ribbon="Development" title="Development">Development</label>';
+if ($isDev) echo '<label class="github-fork-ribbon left-top" data-ribbon="Under Development" title="Under Development">Under Development</label>';
 ?>
 
 <!-- ? Preloader Start -->
