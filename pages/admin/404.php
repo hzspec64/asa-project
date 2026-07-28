@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../core/config.php';
+require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/guard.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
