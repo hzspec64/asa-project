@@ -196,7 +196,7 @@ $donations = $stmt->fetchAll();
 
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="6">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
                                                     Menampilkan

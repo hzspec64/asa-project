@@ -207,7 +207,7 @@ $campaigns = $stmt->fetchAll();
 
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="7">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
                                                     Menampilkan
