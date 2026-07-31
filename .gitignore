@@ -17,5 +17,5 @@ Thumbs.db
 core/config.php
 
 # Uploads
-public/uploads/*
-!public/uploads/.keep
+public_html/uploads/*
+!public_html/uploads/.keep
