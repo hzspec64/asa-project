@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS asa_project
+-- CREATE DATABASE IF NOT EXISTS asa_project
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE asa_project;
+-- USE asa_project;
 
 
 -- =========================================
