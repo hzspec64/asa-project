@@ -12,6 +12,7 @@
         <li><a class="nav-link" href="/admin/users"><i class="ti ti-users"></i><span class="nav-text">Users</span></a></li>
         <li><a class="nav-link" href="/admin/articles"><i class="ti ti-news"></i><span class="nav-text">Articles</span></a></li>
         <li><a class="nav-link" href="/admin/gallery"><i class="ti ti-library-photo"></i><span class="nav-text">Gallery</span></a></li>
+        <li><a class="nav-link" href="/admin/campaigns"><i class="ti ti-speakerphone"></i><span class="nav-text">Campaigns</span></a></li>
 
         <li><a class="nav-link" href="/admin/inventory"><i class="ti ti-box-seam"></i><span class="nav-text">Inventory</span></a></li>
         <li><a class="nav-link" href="/admin/create-product"><i class="ti ti-plus"></i><span class="nav-text">Add Product</span></a></li>
