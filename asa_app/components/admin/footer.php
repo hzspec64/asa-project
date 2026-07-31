@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../core/config.php';
+require_once __DIR__ . '/../../../asa_config.php';
 ?>
 <div class="row">
     <div class="col-12">

@@ -12,8 +12,11 @@ Thumbs.db
 # Logs
 *.log
 
+# Temp
+*.tmp
+
 # Environment
-.env
+asa_config.php
 asa_app/core/config.php
 
 # Uploads
