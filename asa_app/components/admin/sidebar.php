@@ -10,7 +10,7 @@
         <li><a class="nav-link active" href="/admin/"><i class="ti ti-home"></i><span class="nav-text">Dashboard</span></a></li>
         <li><a class="nav-link" href="/admin/campaigns"><i class="ti ti-speakerphone"></i><span class="nav-text">Campaigns</span></a></li>
         <li><a class="nav-link" href="/admin/donations"><i class="ti ti-moneybag-heart"></i><span class="nav-text">Donations</span></a></li>
-        <li><a class="nav-link" href="/admin/distribution"><i class="ti ti-arrow-fork-triple"></i><span class="nav-text">Distributions</span></a></li>
+        <li><a class="nav-link" href="/admin/distributions"><i class="ti ti-arrow-left-from-arc"></i><span class="nav-text">Distributions</span></a></li>
         <li><a class="nav-link" href="/admin/articles"><i class="ti ti-news"></i><span class="nav-text">Articles</span></a></li>
         <li><a class="nav-link" href="/admin/gallery"><i class="ti ti-library-photo"></i><span class="nav-text">Gallery</span></a></li>
         <li><a class="nav-link" href="/admin/users"><i class="ti ti-users"></i><span class="nav-text">Users</span></a></li>
