@@ -20,7 +20,7 @@ if ($path === '') {
 
 $notFound = function () {
     http_response_code(404);
-    require __DIR__ . '/../pages/404.php';
+    require __DIR__ . '/../asa_app/pages/404.php';
     exit;
 };
 
@@ -31,10 +31,10 @@ if (!preg_match('#^/[a-zA-Z0-9_\-/]*$#', $path)) {
 }
 
 $relative = $exceptions[$path] ?? $path;
-$file = __DIR__ . '/../pages' . $relative . '.php';
+$file = __DIR__ . '/../asa_app/pages' . $relative . '.php';
 
 // Resolve symlinks/.. and make sure we're still inside pages/
-$pagesDir = realpath(__DIR__ . '/../pages');
+$pagesDir = realpath(__DIR__ . '/../asa_app/pages');
 $resolved = realpath($file);
 
 if ($resolved === false || strpos($resolved, $pagesDir) !== 0 || !is_file($resolved)) {

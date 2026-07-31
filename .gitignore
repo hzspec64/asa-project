@@ -14,7 +14,7 @@ Thumbs.db
 
 # Environment
 .env
-core/config.php
+asa_app/core/config.php
 
 # Uploads
 public_html/uploads/*
