@@ -51,7 +51,7 @@ $donations = $stmt->fetchAll();
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Inventory - <?php echo APP_NAME;?></title>
+        <title>Donasi - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -78,12 +78,12 @@ $donations = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Donations</h1>
-                                <p class="mb-0">Manage donation records</p>
+                                <h1 class="fs-3 mb-1">Donasi</h1>
+                                <p class="mb-0">Kelola donasi</p>
                             </div>
                             <div>
                                 <a href="/admin/create-donation" class="btn btn-primary">
-                                    Add Donation
+                                    Tambah Donasi
                                 </a>
                             </div>
                         </div>
@@ -126,7 +126,7 @@ $donations = $stmt->fetchAll();
                                     <?php if (empty($donations)): ?>
                                     <tr>
                                         <td colspan="6" class="text-center py-4">
-                                            No donations found.
+                                            Donasi belum tersedia atau tidak ditemukan.
                                         </td>
                                     </tr>
                                     <?php else: ?>
@@ -199,7 +199,7 @@ $donations = $stmt->fetchAll();
                                         <td colspan="5">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    Showing
+                                                    Menampilkan
                                                     <strong>
                                                         <?= $totalRows == 0 ? 0 : $offset + 1 ?>
                                                     </strong>
@@ -207,9 +207,9 @@ $donations = $stmt->fetchAll();
                                                     <strong>
                                                         <?= min($offset + $perPage, $totalRows) ?>
                                                     </strong>
-                                                    of
+                                                    dari
                                                     <strong><?= $totalRows ?></strong>
-                                                    donations
+                                                    donasi
 
                                                 </div>
                                                 <nav>
@@ -219,7 +219,7 @@ $donations = $stmt->fetchAll();
                                                                 class="page-link"
                                                                 href="?page=<?= $page - 1 ?>"
                                                             >
-                                                                Previous
+                                                                Prev
                                                             </a>
                                                         </li>
                                                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>

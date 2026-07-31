@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../core/database.php';
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Template - <?php echo APP_NAME;?></title>
+        <title>Tambah Distribusi - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         require_once __DIR__ . '/../../components/admin/head_link.php';
@@ -34,8 +34,8 @@ require_once __DIR__ . '/../../core/database.php';
                     <div class="col-12">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Create New Distribution</h1>
-                                <p>Description</p>
+                                <h1 class="fs-3 mb-1">Tambah Distribusi</h1>
+                                <p>Deskripsi</p>
                             </div>
                         </div>
                     </div>

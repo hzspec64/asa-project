@@ -121,7 +121,7 @@ $users = $stmt->fetchAll();
                                 <?php if (empty($users)): ?>
                                 <tr>
                                     <td colspan="5" class="text-center py-4">
-                                        No users found.
+                                        Pengelola belum tersedia atau tidak ditemukan.
                                     </td>
                                 </tr>
                                 <?php else: ?>

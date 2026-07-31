@@ -47,7 +47,7 @@ $galleries = $stmt->fetchAll();
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Inventory - <?php echo APP_NAME;?></title>
+        <title>Galeri - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -74,12 +74,12 @@ $galleries = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Gallery</h1>
-                                <p class="mb-0">Manage gallery photos</p>
+                                <h1 class="fs-3 mb-1">Galeri</h1>
+                                <p class="mb-0">Kelola foto galeri</p>
                             </div>
                             <div>
                                 <a href="/admin/add-photo" class="btn btn-primary">
-                                    Add Photo
+                                    Tambah Foto
                                 </a>
                             </div>
                         </div>
@@ -121,7 +121,7 @@ $galleries = $stmt->fetchAll();
                                     <?php if (empty($galleries)): ?>
                                     <tr>
                                         <td colspan="5" class="text-center py-4">
-                                            No gallery found.
+                                            Foto belum tersedia atau tidak ditemukan.
                                         </td>
                                     </tr>
                                     <?php else: ?>
@@ -178,7 +178,7 @@ $galleries = $stmt->fetchAll();
                                         <td colspan="5">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    Showing
+                                                    Menampilkan
                                                     <strong>
                                                         <?= $totalRows == 0 ? 0 : $offset + 1 ?>
                                                     </strong>
@@ -186,9 +186,9 @@ $galleries = $stmt->fetchAll();
                                                     <strong>
                                                         <?= min($offset + $perPage, $totalRows) ?>
                                                     </strong>
-                                                    of
+                                                    dari
                                                     <strong><?= $totalRows ?></strong>
-                                                    gallery photos
+                                                    foto
 
                                                 </div>
                                                 <nav>
@@ -198,7 +198,7 @@ $galleries = $stmt->fetchAll();
                                                                 class="page-link"
                                                                 href="?page=<?= $page - 1 ?>"
                                                             >
-                                                                Previous
+                                                                Prev
                                                             </a>
                                                         </li>
                                                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>

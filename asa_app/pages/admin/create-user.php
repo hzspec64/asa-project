@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Create User - <?php echo APP_NAME;?></title>
+        <title>Tambah Pengelola - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         require_once __DIR__ . '/../../components/admin/head_link.php';
@@ -117,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-12">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Create User</h1>
-                                <p class="mb-0">Create a new application user.</p>
+                                <h1 class="fs-3 mb-1">Tambah Pengelola</h1>
+                                <p class="mb-0">Pengaturan pengelola</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-primary">

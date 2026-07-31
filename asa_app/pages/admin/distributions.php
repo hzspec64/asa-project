@@ -50,7 +50,7 @@ $distributions = $stmt->fetchAll();
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Inventory - <?php echo APP_NAME;?></title>
+        <title>Distribusi - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -77,12 +77,12 @@ $distributions = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Distributions</h1>
-                                <p class="mb-0">Manage fund distributions</p>
+                                <h1 class="fs-3 mb-1">Distribusi</h1>
+                                <p class="mb-0">Kelola distribusi</p>
                             </div>
                             <div>
                                 <a href="/admin/create-distribution" class="btn btn-primary">
-                                    Add Distribution
+                                    Tambah Distribusi
                                 </a>
                             </div>
                         </div>
@@ -125,7 +125,7 @@ $distributions = $stmt->fetchAll();
                                     <?php if (empty($distributions)): ?>
                                     <tr>
                                         <td colspan="6" class="text-center py-4">
-                                            No distributions found.
+                                            Distribusi belum tersedia atau tidak ditemukan.
                                         </td>
                                     </tr>
                                     <?php else: ?>
@@ -179,7 +179,7 @@ $distributions = $stmt->fetchAll();
                                         <td colspan="5">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    Showing
+                                                    Menampilkan
                                                     <strong>
                                                         <?= $totalRows == 0 ? 0 : $offset + 1 ?>
                                                     </strong>
@@ -187,10 +187,9 @@ $distributions = $stmt->fetchAll();
                                                     <strong>
                                                         <?= min($offset + $perPage, $totalRows) ?>
                                                     </strong>
-                                                    of
+                                                    dari
                                                     <strong><?= $totalRows ?></strong>
-                                                    distributions
-
+                                                    distribusi
                                                 </div>
                                                 <nav>
                                                     <ul class="pagination mb-0">
@@ -199,7 +198,7 @@ $distributions = $stmt->fetchAll();
                                                                 class="page-link"
                                                                 href="?page=<?= $page - 1 ?>"
                                                             >
-                                                                Previous
+                                                                Prev
                                                             </a>
                                                         </li>
                                                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>

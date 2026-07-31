@@ -52,7 +52,7 @@ $campaigns = $stmt->fetchAll();
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Inventory - <?php echo APP_NAME;?></title>
+        <title>Campaign - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -79,12 +79,12 @@ $campaigns = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Campaigns</h1>
-                                <p class="mb-0">Manage fundraising campaigns</p>
+                                <h1 class="fs-3 mb-1">Campaign</h1>
+                                <p class="mb-0">Kelola fundraising campaigns</p>
                             </div>
                             <div>
                                 <a href="/admin/create-campaign" class="btn btn-primary">
-                                    Add Campaign
+                                    Tambah Campaign
                                 </a>
                             </div>
                         </div>
@@ -128,7 +128,7 @@ $campaigns = $stmt->fetchAll();
                                     <?php if (empty($campaigns)): ?>
                                     <tr>
                                         <td colspan="7" class="text-center py-4">
-                                            No campaigns found.
+                                            Campaign belum tersedia atau tidak ditemukan.
                                         </td>
                                     </tr>
                                     <?php else: ?>
@@ -210,7 +210,7 @@ $campaigns = $stmt->fetchAll();
                                         <td colspan="5">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    Showing
+                                                    Menampilkan
                                                     <strong>
                                                         <?= $totalRows == 0 ? 0 : $offset + 1 ?>
                                                     </strong>
@@ -218,10 +218,9 @@ $campaigns = $stmt->fetchAll();
                                                     <strong>
                                                         <?= min($offset + $perPage, $totalRows) ?>
                                                     </strong>
-                                                    of
+                                                    dari
                                                     <strong><?= $totalRows ?></strong>
-                                                    campaigns
-
+                                                    campaign
                                                 </div>
                                                 <nav>
                                                     <ul class="pagination mb-0">
@@ -230,7 +229,7 @@ $campaigns = $stmt->fetchAll();
                                                                 class="page-link"
                                                                 href="?page=<?= $page - 1 ?>"
                                                             >
-                                                                Previous
+                                                                Prev
                                                             </a>
                                                         </li>
                                                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>

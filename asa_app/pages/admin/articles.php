@@ -49,7 +49,7 @@ $articles = $stmt->fetchAll();
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Inventory - <?php echo APP_NAME;?></title>
+        <title>Artikel - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -76,12 +76,12 @@ $articles = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Articles</h1>
-                                <p class="mb-0">Manage website articles</p>
+                                <h1 class="fs-3 mb-1">Artikel</h1>
+                                <p class="mb-0">Kelola artikel</p>
                             </div>
                             <div>
                                 <a href="/admin/create-article" class="btn btn-primary">
-                                    Add Article
+                                    Tambah Artikel
                                 </a>
                             </div>
                         </div>
@@ -123,7 +123,7 @@ $articles = $stmt->fetchAll();
                                     <?php if (empty($articles)): ?>
                                     <tr>
                                         <td colspan="5" class="text-center py-4">
-                                            No articles found.
+                                            Artikel belum tersedia atau tidak ditemukan.
                                         </td>
                                     </tr>
                                     <?php else: ?>
@@ -176,7 +176,7 @@ $articles = $stmt->fetchAll();
                                         <td colspan="5">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    Showing
+                                                    Menampilkan
                                                     <strong>
                                                         <?= $totalRows == 0 ? 0 : $offset + 1 ?>
                                                     </strong>
@@ -184,10 +184,9 @@ $articles = $stmt->fetchAll();
                                                     <strong>
                                                         <?= min($offset + $perPage, $totalRows) ?>
                                                     </strong>
-                                                    of
+                                                    dari
                                                     <strong><?= $totalRows ?></strong>
-                                                    articles
-
+                                                    artikel
                                                 </div>
                                                 <nav>
                                                     <ul class="pagination mb-0">
