@@ -158,7 +158,7 @@ $articles = $stmt->fetchAll();
                                                 <i class="ti ti-edit"></i>
                                             </a>
                                             <a
-                                                href="/admin/delete-article?id=<?= $article['id'] ?>"
+                                                href="#"
                                                 class="link-danger ms-2"
                                                 onclick="return confirm('Delete this article?')"
                                                 title="Delete"

@@ -149,14 +149,14 @@ $users = $stmt->fetchAll();
                                     </td>
                                     <td>
                                         <a
-                                            href="/admin/users/edit?id=<?= $user['id'] ?>"
+                                            href="/admin/edit-user?id=<?= $user['id'] ?>"
                                             title="Edit"
                                         >
                                             <i class="ti ti-edit"></i>
                                         </a>
                                         <?php if ($user['id'] != $_SESSION['user']['id']): ?>
                                         <a
-                                            href="/admin/users/delete?id=<?= $user['id'] ?>"
+                                            href="#"
                                             class="link-danger ms-2"
                                             onclick="return confirm('Delete this user?')"
                                             title="Delete"

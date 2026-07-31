@@ -181,7 +181,7 @@ $donations = $stmt->fetchAll();
                                                 <i class="ti ti-edit"></i>
                                             </a>
                                             <a
-                                                href="/admin/delete-donation?id=<?= $donation['id'] ?>"
+                                                href="#"
                                                 class="link-danger ms-2"
                                                 onclick="return confirm('Delete this donation?')"
                                                 title="Delete"

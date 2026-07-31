@@ -78,7 +78,7 @@ $galleries = $stmt->fetchAll();
                                 <p class="mb-0">Manage gallery photos</p>
                             </div>
                             <div>
-                                <a href="/admin/create-gallery" class="btn btn-primary">
+                                <a href="/admin/add-photo" class="btn btn-primary">
                                     Add Photo
                                 </a>
                             </div>
@@ -154,13 +154,13 @@ $galleries = $stmt->fetchAll();
                                         </td>
                                         <td>
                                             <a
-                                                href="/admin/edit-gallery?id=<?= $gallery['id'] ?>"
+                                                href="/admin/edit-photo?id=<?= $gallery['id'] ?>"
                                                 title="Edit"
                                             >
                                                 <i class="ti ti-edit"></i>
                                             </a>
                                             <a
-                                                href="/admin/delete-gallery?id=<?= $gallery['id'] ?>"
+                                                href="#"
                                                 class="link-danger ms-2"
                                                 onclick="return confirm('Delete this photo?')"
                                                 title="Delete"

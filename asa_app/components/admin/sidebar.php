@@ -7,7 +7,7 @@
     </div>
     <ul class="nav flex-column">
         <li class="px-4 py-2"><small class="nav-text">Navigation</small></li>
-        <li><a class="nav-link active" href="/admin/"><i class="ti ti-home"></i><span class="nav-text">Dashboard</span></a></li>
+        <li><a class="nav-link" href="/admin/"><i class="ti ti-home"></i><span class="nav-text">Dashboard</span></a></li>
         <li><a class="nav-link" href="/admin/campaigns"><i class="ti ti-speakerphone"></i><span class="nav-text">Campaigns</span></a></li>
         <li><a class="nav-link" href="/admin/donations"><i class="ti ti-moneybag-heart"></i><span class="nav-text">Donations</span></a></li>
         <li><a class="nav-link" href="/admin/distributions"><i class="ti ti-arrow-left-from-arc"></i><span class="nav-text">Distributions</span></a></li>
