@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../core/database.php';
                     <div class="col-12">
                         <div class="mb-6">
                             <h1 class="fs-3 mb-1">Dashboard</h1>
-                            <p>Your main content goes here…</p>
+                            <p class="opacity-50">Your main content goes here…</p>
                         </div>
                     </div>
                 </div>

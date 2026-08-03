@@ -75,7 +75,7 @@ $users = $stmt->fetchAll();
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Pengguna</h1>
-                                <p class="mb-0 opcity-50">Tabel pengelolaan pengguna aplikasi.</p>
+                                <p class="mb-0 opacity-50">Tabel pengelolaan pengguna aplikasi.</p>
                             </div>
                             <div>
                                 <a href="/admin/create-user" class="btn btn-success">
