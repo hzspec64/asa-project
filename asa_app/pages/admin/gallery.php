@@ -75,7 +75,7 @@ $galleries = $stmt->fetchAll();
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Galeri</h1>
-                                <p class="mb-0">Kelola foto galeri</p>
+                                <p class="mb-0 opacity-50">Tabel pengelolaan foto galeri.</p>
                             </div>
                             <div>
                                 <a href="/admin/add-photo" class="btn btn-primary">
@@ -92,7 +92,7 @@ $galleries = $stmt->fetchAll();
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search gallery..."
+                                    placeholder="Cari foto..."
                                     style="max-width: 250px;"
                                 >
                                 <div class="d-flex gap-2">

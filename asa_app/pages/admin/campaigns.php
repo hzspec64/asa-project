@@ -80,7 +80,7 @@ $campaigns = $stmt->fetchAll();
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Campaign</h1>
-                                <p class="mb-0">Kelola fundraising campaigns</p>
+                                <p class="mb-0 opacity-50">Tabel pengelolaan campaign.</p>
                             </div>
                             <div>
                                 <a href="/admin/create-campaign" class="btn btn-primary">
@@ -97,7 +97,7 @@ $campaigns = $stmt->fetchAll();
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search campaigns..."
+                                    placeholder="Cari campaign..."
                                     style="max-width: 250px;"
                                 >
                                 <div class="d-flex gap-2">

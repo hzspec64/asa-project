@@ -74,12 +74,12 @@ $users = $stmt->fetchAll();
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Users</h1>
-                                <p class="mb-0">Manage application users</p>
+                                <h1 class="fs-3 mb-1">Pengguna</h1>
+                                <p class="mb-0 opcity-50">Tabel pengelolaan pengguna aplikasi.</p>
                             </div>
                             <div>
                                 <a href="/admin/create-user" class="btn btn-primary">
-                                    Add User
+                                    Tambah Pengelola
                                 </a>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ $users = $stmt->fetchAll();
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search users..."
+                                    placeholder="Cari pengelola..."
                                     style="max-width: 250px;"
                                 >
                                 <div class="d-flex gap-2">

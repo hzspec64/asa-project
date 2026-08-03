@@ -81,7 +81,7 @@ $donations = $stmt->fetchAll();
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Donasi</h1>
-                                <p class="mb-0">Kelola donasi</p>
+                                <p class="mb-0 opacity-50">Tabel pengelolaan donasi.</p>
                             </div>
                             <div>
                                 <a href="/admin/create-donation" class="btn btn-primary">
@@ -98,7 +98,7 @@ $donations = $stmt->fetchAll();
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search donations..."
+                                    placeholder="Cari donasi..."
                                     style="max-width:250px;"
                                 >
                                 <div class="d-flex gap-2">
