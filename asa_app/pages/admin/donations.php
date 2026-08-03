@@ -27,10 +27,12 @@ $stmt = $pdo->prepare("
     SELECT
         donations.id,
         donations.donor_name,
+        donations.donor_phone,
         donations.donor_email,
         donations.amount,
         donations.donation_date,
         donations.status,
+        donations.proof_image,
         campaigns.title AS campaign
     FROM donations
     INNER JOIN campaigns
