@@ -111,10 +111,10 @@ $articles = $stmt->fetchAll();
                             <table class="table mb-0 text-nowrap table-hover">
                                 <thead class="table-light border-light">
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Judul</th>
                                         <th>Status</th>
-                                        <th>Author</th>
-                                        <th>Created</th>
+                                        <th>Oleh</th>
+                                        <th>Dibuat</th>
                                         <th width="120">Action</th>
                                     </tr>
                                 </thead>

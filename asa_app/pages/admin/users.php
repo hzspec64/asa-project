@@ -109,10 +109,10 @@ $users = $stmt->fetchAll();
                             <table class="table mb-0 text-nowrap table-hover">
                                 <thead class="table-light border-light">
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Nama</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Created</th>
+                                        <th>Dibuat</th>
                                         <th width="120">Action</th>
                                     </tr>
                                 </thead>

@@ -113,10 +113,10 @@ $distributions = $stmt->fetchAll();
                                 <thead class="table-light border-light">
                                     <tr>
                                         <th width="80">Image</th>
-                                        <th>Title</th>
+                                        <th>Judul</th>
                                         <th>Campaign</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
+                                        <th>Jumlah</th>
+                                        <th>Dibuat</th>
                                         <th width="120">Action</th>
                                     </tr>
                                 </thead>

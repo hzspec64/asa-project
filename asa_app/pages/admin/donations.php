@@ -117,8 +117,8 @@ $donations = $stmt->fetchAll();
                                     <tr>
                                         <th>Donor</th>
                                         <th>Campaign</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
+                                        <th>Jumlah</th>
+                                        <th>Dibuat</th>
                                         <th>Status</th>
                                         <th width="120">Action</th>
                                     </tr>

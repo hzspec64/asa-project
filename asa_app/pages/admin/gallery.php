@@ -110,9 +110,9 @@ $galleries = $stmt->fetchAll();
                                 <thead class="table-light border-light">
                                     <tr>
                                         <th width="80">Image</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Created</th>
+                                        <th>Judul</th>
+                                        <th>Deskripsi</th>
+                                        <th>Dibuat</th>
                                         <th width="120">Action</th>
                                     </tr>
                                 </thead>

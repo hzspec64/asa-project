@@ -114,12 +114,12 @@ $campaigns = $stmt->fetchAll();
                             <table class="table mb-0 text-nowrap table-hover">
                                 <thead class="table-light border-light">
                                     <tr>
-                                        <th width="80">Image</th>
-                                        <th>Title</th>
+                                        <th width="80">Ilustrasi</th>
+                                        <th>Judul</th>
                                         <th>Target</th>
-                                        <th>Period</th>
+                                        <th>Periode</th>
                                         <th>Status</th>
-                                        <th>Author</th>
+                                        <th>Oleh</th>
                                         <th width="120">Action</th>
                                     </tr>
                                 </thead>
