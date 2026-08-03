@@ -38,7 +38,7 @@ require_once __DIR__ . '/../../core/database.php';
                                 <p class="mb-0">Manage your inventory items</p>
                             </div>
                             <div>
-                                <a href="inventory.html" class="btn btn-primary">Go to Inventory List</a>
+                                <a href="inventory.html" class="btn btn-success">Go to Inventory List</a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ require_once __DIR__ . '/../../core/database.php';
                                         <textarea class="form-control" id="productDescription" rows="4" placeholder="Enter product description"></textarea>
                                     </div>
                                     <div class="d-flex gap-2">
-                                        <button type="submit" class="btn btn-primary">Add Product</button>
+                                        <button type="submit" class="btn btn-success">Add Product</button>
                                         <button type="reset" class="btn btn-secondary">Clear</button>
                                     </div>
                                 </form>

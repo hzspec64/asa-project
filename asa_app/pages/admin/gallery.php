@@ -78,7 +78,7 @@ $galleries = $stmt->fetchAll();
                                 <p class="mb-0 opacity-50">Tabel pengelolaan foto galeri.</p>
                             </div>
                             <div>
-                                <a href="/admin/add-photo" class="btn btn-primary">
+                                <a href="/admin/add-photo" class="btn btn-success">
                                     Tambah Foto
                                 </a>
                             </div>

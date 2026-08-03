@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <p class="mb-0">Pengaturan pengelola</p>
                             </div>
                             <div>
-                                <a href="/admin/users" class="btn btn-primary">
+                                <a href="/admin/users" class="btn btn-success">
                                     User List
                                 </a>
                             </div>
@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="d-flex gap-2">
                                         <button
                                             type="submit"
-                                            class="btn btn-primary"
+                                            class="btn btn-success"
                                         >
                                             Save User
                                         </button>

@@ -84,7 +84,7 @@ $donations = $stmt->fetchAll();
                                 <p class="mb-0 opacity-50">Tabel pengelolaan donasi.</p>
                             </div>
                             <div>
-                                <a href="/admin/create-donation" class="btn btn-primary">
+                                <a href="/admin/create-donation" class="btn btn-success">
                                     Tambah Donasi
                                 </a>
                             </div>

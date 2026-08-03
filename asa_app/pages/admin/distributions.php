@@ -81,7 +81,7 @@ $distributions = $stmt->fetchAll();
                                 <p class="mb-0 opacity-50">Tabel pengelolaan distribusi.</p>
                             </div>
                             <div>
-                                <a href="/admin/create-distribution" class="btn btn-primary">
+                                <a href="/admin/create-distribution" class="btn btn-success">
                                     Tambah Distribusi
                                 </a>
                             </div>

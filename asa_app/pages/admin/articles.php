@@ -80,7 +80,7 @@ $articles = $stmt->fetchAll();
                                 <p class="mb-0 opacity-50">Tabel pengelolaan artikel.</p>
                             </div>
                             <div>
-                                <a href="/admin/create-article" class="btn btn-primary">
+                                <a href="/admin/create-article" class="btn btn-success">
                                     Tambah Artikel
                                 </a>
                             </div>

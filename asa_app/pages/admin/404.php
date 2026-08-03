@@ -29,7 +29,7 @@ require_once __DIR__ . '/../../core/guard.php';
                     <h2 class="card-title h4 mb-3">Page Not Found</h2>
                     <p class="text-muted mb-4">Sorry, the page you're looking for doesn't exist or has been moved.</p>
 
-                    <a href="/admin" class="btn btn-primary">Go to Dashboard</a>
+                    <a href="/admin" class="btn btn-success">Go to Dashboard</a>
                 </div>
             </div>
         </div>

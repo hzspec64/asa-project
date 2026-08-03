@@ -83,7 +83,7 @@ $campaigns = $stmt->fetchAll();
                                 <p class="mb-0 opacity-50">Tabel pengelolaan campaign.</p>
                             </div>
                             <div>
-                                <a href="/admin/create-campaign" class="btn btn-primary">
+                                <a href="/admin/create-campaign" class="btn btn-success">
                                     Tambah Campaign
                                 </a>
                             </div>

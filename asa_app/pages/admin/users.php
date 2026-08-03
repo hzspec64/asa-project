@@ -78,7 +78,7 @@ $users = $stmt->fetchAll();
                                 <p class="mb-0 opcity-50">Tabel pengelolaan pengguna aplikasi.</p>
                             </div>
                             <div>
-                                <a href="/admin/create-user" class="btn btn-primary">
+                                <a href="/admin/create-user" class="btn btn-success">
                                     Tambah Pengelola
                                 </a>
                             </div>

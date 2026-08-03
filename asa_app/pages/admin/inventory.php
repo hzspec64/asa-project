@@ -39,7 +39,7 @@ require_once __DIR__ . '/../../core/database.php';
                                 <p class="mb-0">Manage your product inventory</p>
                             </div>
                             <div>
-                                <a href="create-product.html" class="btn btn-primary">Add Product</a>
+                                <a href="create-product.html" class="btn btn-success">Add Product</a>
                             </div>
                         </div>
                     </div>

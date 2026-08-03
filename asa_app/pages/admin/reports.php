@@ -98,7 +98,7 @@ require_once __DIR__ . '/../../core/database.php';
                                     </div>
                                     <div class="controls">
                                         <button id="btn-random" class="btn btn-light btn-sm">Randomize Data</button>
-                                        <button id="btn-update" class="btn btn-primary btn-sm">Show This Year Only</button>
+                                        <button id="btn-update" class="btn btn-success btn-sm">Show This Year Only</button>
                                     </div>
                                 </div>
                                 <!-- Chart placeholder: replace with canvas or chart container when integrating chart library -->
