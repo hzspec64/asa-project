@@ -1,3 +1,8 @@
+<?php
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+}
+?>
 <nav id="topbar" class="navbar bg-white border-bottom fixed-top topbar px-3">
     <button id="toggleBtn" class="d-none d-lg-inline-flex btn btn-light btn-icon btn-sm ">
         <i class="ti ti-layout-sidebar-left-expand"></i>
@@ -68,25 +73,13 @@
                         <div class="d-flex gap-3 align-items-center border-dashed border-bottom px-3 py-3">
                             <img src="/assets/admin/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle" />
                             <div>
-                                <h4 class="mb-0 small">Shrina Tesla</h4>
-                                <p class="mb-0  small">@imshrina</p>
+                                <h4 class="mb-0 small"><?= $user['name']; ?></h4>
+                                <!-- <p class="mb-0  small"><?= $user['email']; ?></p> -->
                             </div>
                         </div>
                         <div class="p-3 d-flex flex-column gap-1 small lh-lg">
-                            <a href="#!" class="">
-                                <span>Home</span>
-                            </a>
-                            <a href="#!" class="">
-                                <span> Inbox</span>
-                            </a>
-                            <a href="#!" class="">
-                                <span> Chat</span>
-                            </a>
-                            <a href="#!" class="">
-                                <span> Activity</span>
-                            </a>
-                            <a href="#!" class="">
-                                <span> Account Settings</span>
+                            <a href="/admin/signout" class="text-danger">
+                                <i class="ti ti-logout"></i> <span class="ml-2">Signout</span>
                             </a>
                         </div>
                     </div>
