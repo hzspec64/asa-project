@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Tambah Pengelola - <?php echo APP_NAME;?></title>
+        <title>Tambah Donasi - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         require_once __DIR__ . '/../../components/admin/head_link.php';
