@@ -28,3 +28,5 @@ public_html/uploads/campaign/*.*
 !public_html/uploads/campaign/.keep
 public_html/uploads/distribution/*.*
 !public_html/uploads/distribution/.keep
+public_html/uploads/donation/*.*
+!public_html/uploads/donation/.keep
