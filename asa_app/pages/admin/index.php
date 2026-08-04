@@ -3,6 +3,8 @@ require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
+
+$CURRENT_PAGE = 'dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="en">

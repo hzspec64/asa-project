@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
+$CURRENT_PAGE = 'campaign';
+
 $perPage = 10;
 
 $page = isset($_GET['page'])
