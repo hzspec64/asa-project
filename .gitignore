@@ -24,3 +24,5 @@ public_html/uploads/*.*
 !public_html/uploads/.keep
 public_html/uploads/article/*.*
 !public_html/uploads/article/.keep
+public_html/uploads/campaign/*.*
+!public_html/uploads/campaign/.keep
