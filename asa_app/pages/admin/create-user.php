@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Tambah Pengelola</h1>
-                                <p class="mb-0">Pengaturan pengelola</p>
+                                <p class="mb-0">Tambah data pengelola.</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-success">

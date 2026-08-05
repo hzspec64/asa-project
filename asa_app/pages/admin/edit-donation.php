@@ -4,16 +4,48 @@ require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
+$id = isset($_GET['id'])
+    ? (int) $_GET['id']
+    : 0;
+
+if ($id <= 0) {
+    header("Location: /admin/donations");
+    exit;
+}
+
+// Load donation
+$stmt = $pdo->prepare("
+    SELECT *
+    FROM donations
+    WHERE id = ?
+");
+
+$stmt->execute([$id]);
+
+$donation = $stmt->fetch();
+
+if (!$donation) {
+    header("Location: /admin/donations");
+    exit;
+}
+
 $errors = [];
 
-$campaignId = "";
-$donorName = "";
-$donorEmail = "";
-$donorPhone = "";
-$amount = "";
-$donationDate = date('Y-m-d\TH:i');
-$status = "pending";
-$note = "";
+$campaignId = $donation['campaign_id'];
+$donorName = $donation['donor_name'];
+$donorEmail = $donation['donor_email'];
+$donorPhone = $donation['donor_phone'];
+$amount = $donation['amount'];
+
+$donationDate = date(
+    'Y-m-d\TH:i',
+    strtotime($donation['donation_date'])
+);
+
+$status = $donation['status'];
+$note = $donation['note'];
+
+$proofImage = $donation['proof_image'];
 
 // Load campaigns
 $stmt = $pdo->query("
@@ -27,7 +59,6 @@ $stmt = $pdo->query("
 $campaigns = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $campaignId = $_POST['campaign_id'];
     $donorName = trim($_POST['donor_name']);
     $donorEmail = trim($_POST['donor_email']);
@@ -62,32 +93,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Donation date is required.";
     }
 
-    if (!in_array($status, ['pending', 'paid', 'cancelled'])) {
+    if (!in_array($status, [
+        'pending',
+        'paid',
+        'cancelled'
+    ])) {
         $errors[] = "Status is invalid.";
     }
 
     if (empty($errors)) {
-
         $stmt = $pdo->prepare("
             SELECT COUNT(*)
             FROM campaigns
             WHERE id = ?
         ");
 
-        $stmt->execute([$campaignId]);
+        $stmt->execute([
+            $campaignId
+        ]);
 
         if ($stmt->fetchColumn() == 0) {
             $errors[] = "Campaign is invalid.";
         }
     }
 
-    $proofImage = null;
-
+    // Upload new proof image
     if (
         isset($_FILES['proof_image']) &&
         $_FILES['proof_image']['error'] == UPLOAD_ERR_OK
     ) {
-
         $extension = strtolower(
             pathinfo(
                 $_FILES['proof_image']['name'],
@@ -95,7 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )
         );
 
-        $proofImage = date('YmdHis') . '-' . uniqid() . '.' . $extension;
+        $proofImage = date('YmdHis')
+            . '-'
+            . uniqid()
+            . '.'
+            . $extension;
 
         move_uploaded_file(
             $_FILES['proof_image']['tmp_name'],
@@ -104,32 +142,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-
         $stmt = $pdo->prepare("
-            INSERT INTO donations
-            (
-                campaign_id,
-                donor_name,
-                donor_email,
-                donor_phone,
-                amount,
-                donation_date,
-                status,
-                proof_image,
-                note
-            )
-            VALUES
-            (
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                ?
-            )
+            UPDATE donations
+            SET
+                campaign_id = ?,
+                donor_name = ?,
+                donor_email = ?,
+                donor_phone = ?,
+                amount = ?,
+                donation_date = ?,
+                status = ?,
+                proof_image = ?,
+                note = ?
+            WHERE id = ?
         ");
 
         $stmt->execute([
@@ -141,7 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $donationDate,
             $status,
             $proofImage,
-            $note ?: null
+            $note ?: null,
+            $id
         ]);
 
         header("Location: /admin/donations");
@@ -179,8 +205,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-12">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Tambah Donasi</h1>
-                                <p class="mb-0">Tambah data donasi.</p>
+                                <h1 class="fs-3 mb-1">Edit Donasi</h1>
+                                <p class="mb-0">Perbarui data donasi.</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-success">
@@ -274,6 +300,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             >
                                         </div>
                                     </div>
+                                    <?php if ($proofImage): ?>
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Current Proof Image
+                                        </label>
+                                        <div>
+                                            <img
+                                                src="/uploads/donation/<?= htmlspecialchars($proofImage) ?>"
+                                                class="img-thumbnail"
+                                                style="max-width:250px"
+                                            >
+                                        </div>
+                                    </div>
+                                    <?php endif; ?>
                                     <div class="mb-3">
                                         <label class="form-label">Proof Image</label>
                                         <input
@@ -314,7 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             type="submit"
                                             class="btn btn-success"
                                         >
-                                            Save Donation
+                                            Update Donation
                                         </button>
                                         <a
                                             href="/admin/donations"

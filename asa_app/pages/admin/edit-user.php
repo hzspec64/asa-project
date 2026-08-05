@@ -76,12 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password !== $confirmPassword) {
             $errors[] = "Password confirmation does not match.";
         }
-
     }
 
     // Duplicate email
     if (empty($errors)) {
-
         $stmt = $pdo->prepare("
             SELECT COUNT(*)
             FROM users
@@ -97,13 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetchColumn() > 0) {
             $errors[] = "Email already exists.";
         }
-
     }
 
     if (empty($errors)) {
-
         if ($password === "") {
-
             $stmt = $pdo->prepare("
                 UPDATE users
                 SET
@@ -119,9 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $role,
                 $id
             ]);
-
         } else {
-
             $stmt = $pdo->prepare("
                 UPDATE users
                 SET
@@ -144,9 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         header("Location: /admin/users");
         exit;
-
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -179,8 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-12">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
-                                <h1 class="fs-3 mb-1">Edit Data Pengelola</h1>
-                                <p class="mb-0">Perbarui data pengelola</p>
+                                <h1 class="fs-3 mb-1">Edit Pengelola</h1>
+                                <p class="mb-0">Perbarui data pengelola.</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-success">

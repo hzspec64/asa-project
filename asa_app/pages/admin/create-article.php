@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: /admin/articles");
         exit;
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -141,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Tambah Artikel</h1>
-                                <p class="mb-0">Buat artikel baru</p>
+                                <p class="mb-0">Buat artikel baru.</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-success">

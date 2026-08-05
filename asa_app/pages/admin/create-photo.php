@@ -4,36 +4,10 @@ require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
-$id = isset($_GET['id'])
-    ? (int) $_GET['id']
-    : 0;
-
-if ($id <= 0) {
-    header("Location: /admin/gallery");
-    exit;
-}
-
-// Load gallery
-$stmt = $pdo->prepare("
-    SELECT *
-    FROM galleries
-    WHERE id = ?
-");
-
-$stmt->execute([$id]);
-
-$gallery = $stmt->fetch();
-
-if (!$gallery) {
-    header("Location: /admin/gallery");
-    exit;
-}
-
 $errors = [];
 
-$title = $gallery['title'];
-$description = $gallery['description'];
-$image = $gallery['image'];
+$title = "";
+$description = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
@@ -43,13 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Title is required.";
     }
 
-    $newImage = $image;
-
-    // Upload new image (optional)
     if (
-        isset($_FILES['image']) &&
-        $_FILES['image']['error'] == UPLOAD_ERR_OK
+        !isset($_FILES['image']) ||
+        $_FILES['image']['error'] != UPLOAD_ERR_OK
     ) {
+        $errors[] = "Photo is required.";
+    }
+
+    $image = null;
+
+    if (empty($errors)) {
         $extension = strtolower(
             pathinfo(
                 $_FILES['image']['name'],
@@ -66,35 +43,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!in_array($extension, $allowed)) {
             $errors[] = "Invalid image format.";
-        } else {
-            $newImage = date('YmdHis')
-                . '-'
-                . uniqid()
-                . '.'
-                . $extension;
-
-            move_uploaded_file(
-                $_FILES['image']['tmp_name'],
-                __DIR__ . '/../../../public_html/uploads/gallery/' . $newImage
-            );
         }
     }
 
     if (empty($errors)) {
+        $image = date('YmdHis') . '-' . uniqid() . '.' . $extension;
+
+        move_uploaded_file(
+            $_FILES['image']['tmp_name'],
+            __DIR__ . '/../../../public/uploads/gallery/' . $image
+        );
+
         $stmt = $pdo->prepare("
-            UPDATE galleries
-            SET
-                title = ?,
-                description = ?,
-                image = ?
-            WHERE id = ?
+            INSERT INTO galleries
+            (
+                title,
+                description,
+                image
+            )
+            VALUES
+            (
+                ?,
+                ?,
+                ?
+            )
         ");
 
         $stmt->execute([
             $title,
             $description ?: null,
-            $newImage,
-            $id
+            $image
         ]);
 
         header("Location: /admin/gallery");
@@ -171,23 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             required
                                         >
                                     </div>
-                                    <?php if ($image): ?>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">
-                                            Current Photo
-                                        </label>
-
-                                        <div>
-                                            <img
-                                                src="/uploads/gallery/<?= htmlspecialchars($image) ?>"
-                                                class="img-thumbnail"
-                                                style="max-width:250px"
-                                            >
-                                        </div>
-                                    </div>
-
-                                    <?php endif; ?>
                                     <div class="mb-3">
                                         <label class="form-label">
                                             Photo
@@ -197,11 +158,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             name="image"
                                             class="form-control"
                                             accept=".jpg,.jpeg,.png,.webp"
+                                            required
                                         >
-
-                                        <small class="text-muted">
-                                            Leave empty to keep current photo.
-                                        </small>
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label">
@@ -218,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             type="submit"
                                             class="btn btn-success"
                                         >
-                                            Update Photo
+                                            Save Photo
                                         </button>
                                         <a
                                             href="/admin/gallery"

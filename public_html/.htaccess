@@ -21,3 +21,9 @@ RewriteRule ^ index.php [QSA,L]
   ExpiresByType image/x-icon "access plus 1 month"
   ExpiresByType text/html "access plus 600 seconds"
 </IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+</IfModule>

@@ -30,3 +30,5 @@ public_html/uploads/distribution/*.*
 !public_html/uploads/distribution/.keep
 public_html/uploads/donation/*.*
 !public_html/uploads/donation/.keep
+public_html/uploads/gallery/*.*
+!public_html/uploads/gallery/.keep

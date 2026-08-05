@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                             <div class="">
                                 <h1 class="fs-3 mb-1">Tambah Distribusi</h1>
-                                <p class="mb-0">Tambah data penyaluran donasi</p>
+                                <p class="mb-0">Tambah data penyaluran donasi.</p>
                             </div>
                             <div>
                                 <a href="/admin/users" class="btn btn-success">
