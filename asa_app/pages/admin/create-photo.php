@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         move_uploaded_file(
             $_FILES['image']['tmp_name'],
-            __DIR__ . '/../../../public/uploads/gallery/' . $image
+            __DIR__ . '/../../../public_html/uploads/gallery/' . $image
         );
 
         $stmt = $pdo->prepare("

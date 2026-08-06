@@ -18,7 +18,6 @@ $stmt = $pdo->query("
         id,
         title
     FROM campaigns
-    WHERE status = 'active'
     ORDER BY title
 ");
 
