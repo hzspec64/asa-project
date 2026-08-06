@@ -178,7 +178,7 @@ $distributions = $stmt->fetchAll();
                                             </a>
                                             <form action="" method="POST" class="d-inline" onsubmit="return confirm('Hapus distribusi ini?');">
                                                 <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="id" value="<?= htmlspecialchars($campaign['id']) ?>">
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($distribution['id']) ?>">
                                                 <button type="submit"
                                                         class="btn p-0 border-0 bg-transparent link-danger ms-2"
                                                         title="Hapus">
