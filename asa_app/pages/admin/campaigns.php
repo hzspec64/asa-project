@@ -4,6 +4,20 @@ require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $deleteId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+    if ($deleteId) {
+        $deleteStmt = $pdo->prepare("DELETE FROM campaigns WHERE id = :id");
+        $deleteStmt->execute([':id' => $deleteId]);
+    }
+
+    // Redirect back to the same page (preserving page number if present)
+    $currentPageNum = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    header("Location: /admin/campaigns?page=" . $currentPageNum);
+    exit;
+}
+
 $CURRENT_PAGE = 'campaign';
 
 $perPage = 10;
@@ -193,14 +207,15 @@ $campaigns = $stmt->fetchAll();
                                             >
                                                 <i class="ti ti-edit"></i>
                                             </a>
-                                            <a
-                                                href="#"
-                                                class="link-danger ms-2"
-                                                onclick="return confirm('Delete this campaign?')"
-                                                title="Delete"
-                                            >
-                                                <i class="ti ti-trash"></i>
-                                            </a>
+                                            <form action="" method="POST" class="d-inline" onsubmit="return confirm('Hapus campaign ini?');">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($campaign['id']) ?>">
+                                                <button type="submit"
+                                                        class="btn p-0 border-0 bg-transparent link-danger ms-2"
+                                                        title="Hapus">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
