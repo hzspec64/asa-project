@@ -223,6 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                         <textarea
                                             name="content"
+                                            id="summernote"
                                             rows="10"
                                             class="form-control"
                                             required
