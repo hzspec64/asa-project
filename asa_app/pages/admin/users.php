@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Redirect back to the same page (preserving page number if present)
     $currentPageNum = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    header("Location: /admin/user?page=" . $currentPageNum);
+    header("Location: /admin/users?page=" . $currentPageNum);
     exit;
 }
 
