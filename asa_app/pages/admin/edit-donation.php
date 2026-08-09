@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
+require_once __DIR__ . '/../../core/image.php';
 
 $id = isset($_GET['id'])
     ? (int) $_GET['id']
@@ -129,16 +130,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )
         );
 
-        $proofImage = date('YmdHis')
-            . '-'
-            . uniqid()
-            . '.'
-            . $extension;
+        $allowed = [
+            'jpg',
+            'jpeg',
+        ];
 
-        move_uploaded_file(
-            $_FILES['proof_image']['tmp_name'],
-            __DIR__ . '/../../../public_html/uploads/donation/' . $proofImage
-        );
+        if (!in_array($extension, $allowed)) {
+            $errors[] = "Invalid image format.";
+        } else {
+            $filename = uniqid();
+
+            $result = createImageVersions(
+                $_FILES['image']['tmp_name'],
+                __DIR__ . '/../../../public_html/uploads/donation',
+                $filename
+            );
+
+            if (!$result) {
+                $errors[] = "Unable to process image.";
+            } else {
+                $image = $result;
+            }
+        }
     }
 
     if (empty($errors)) {
@@ -320,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             type="file"
                                             name="proof_image"
                                             class="form-control"
-                                            accept=".jpg,.jpeg,.png,.webp"
+                                            accept=".jpg,.jpeg"
                                         >
                                     </div>
                                     <div class="mb-3">

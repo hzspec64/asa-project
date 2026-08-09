@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
+require_once __DIR__ . '/../../core/image.php';
 
 $errors = [];
 
@@ -37,22 +38,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed = [
             'jpg',
             'jpeg',
-            'png',
-            'webp'
         ];
 
         if (!in_array($extension, $allowed)) {
             $errors[] = "Invalid image format.";
+        } else {
+            $filename = uniqid();
+
+            $result = createImageVersions(
+                $_FILES['image']['tmp_name'],
+                __DIR__ . '/../../../public_html/uploads/gallery',
+                $filename
+            );
+
+            if (!$result) {
+                $errors[] = "Unable to process image.";
+            } else {
+                $image = $result;
+            }
         }
     }
 
     if (empty($errors)) {
-        $image = date('YmdHis') . '-' . uniqid() . '.' . $extension;
-
-        move_uploaded_file(
-            $_FILES['image']['tmp_name'],
-            __DIR__ . '/../../../public_html/uploads/gallery/' . $image
-        );
 
         $stmt = $pdo->prepare("
             INSERT INTO galleries
