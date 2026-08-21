@@ -1,14 +1,20 @@
 <?php
 require_once __DIR__ . '/../../asa_config.php';
 require_once __DIR__ . '/../core/database.php';
+
+$galleries = $pdo->query("
+    SELECT *
+    FROM galleries
+    ORDER BY created_at DESC
+")->fetchAll();
 ?>
 <!doctype html>
 <html class="no-js" lang="id">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Events - <?php echo APP_NAME;?></title>
-        <meta name="description" content="">
+        <title>Kegiatan - <?php echo APP_NAME;?></title>
+        <meta name="description" content="Dokumentasi kegiatan dan penyaluran donasi Asa Palestina melalui galeri kemanusiaan.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -29,7 +35,7 @@ require_once __DIR__ . '/../core/database.php';
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="hero-cap hero-cap2 pt-20 text-center">
-                                    <h2>social events </h2>
+                                    <h2>Kegiatan</h2>
                                 </div>
                             </div>
                         </div>
@@ -37,237 +43,45 @@ require_once __DIR__ . '/../core/database.php';
                 </div>
             </div>
             <!-- Hero End -->
-            <!--? Count Down Start -->
-            <div class="count-down-area pt-25 section-bg" data-background="assets/img/gallery/section_bg02.png">
+
+            <!--? Gallery Start -->
+            <div class="our-cases-area section-padding30">
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="count-down-wrapper">
-                                <div class="row justify-content-between">
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">6,200</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
+                    <div class="row justify-content-center mb-60">
+                        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-10">
+                            <div class="section-tittle text-center">
+                                <span>Dokumentasi lapangan</span>
+                                <h2>Galeri Kemanusiaan</h2>
+                                <p class="mt-20">Setiap foto adalah jejak asa yang telah Sahabat Asa salurkan bagi saudara di Palestina.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <?php if (empty($galleries)): ?>
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Belum ada dokumentasi kegiatan yang ditampilkan.</p>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($galleries as $gallery): ?>
+                                <div class="col-lg-4 col-md-6 col-sm-6 mb-30">
+                                    <div class="single-cases">
+                                        <div class="cases-img">
+                                            <img src="/uploads/gallery/<?php echo htmlspecialchars($gallery['image']); ?>" alt="<?php echo htmlspecialchars($gallery['title']); ?>">
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">80</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Fund Raised</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">256</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">256</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
+                                        <div class="cases-caption">
+                                            <h3><?php echo htmlspecialchars($gallery['title']); ?></h3>
+                                            <?php if (!empty($gallery['description'])): ?>
+                                                <p class="text-muted"><?php echo htmlspecialchars($gallery['description']); ?></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-            <!-- Count Down End -->
-            <!-- Featured_job_start -->
-            <section class="featured-job-area section-padding30 section-bg2" data-background="assets/img/gallery/section_bg03.png">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-7 col-lg-9 col-md-10 col-sm-12">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle text-center mb-80">
-                                <span>What we are boing</span>
-                                <h2>We arrange many social events for charity donations</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents1.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>Donation is Hope</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents2.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>A hand for Children</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents3.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>Help for Children</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents1.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>Donation is Hope</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents2.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>A hand for Children</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#">
-                                            <img src="assets/img/gallery/socialEvents3.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#">
-                                            <h4>Help for Children</h4>
-                                        </a>
-                                        <ul>
-                                            <li>
-                                                <i class="far fa-clock"></i>8:30 - 9:30am
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-sort-amount-down"></i>18.01.2021
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-map-marker-alt"></i>Athens, Greece
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Featured_job_end -->
+            <!-- Gallery End -->
         </main>
 
         <?php

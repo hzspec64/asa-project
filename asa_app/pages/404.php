@@ -37,7 +37,7 @@ require_once __DIR__ . '/../../asa_config.php';
 
                         <!-- Call-to-action button -->
                         <a href="/" class="btn btn-success btn-lg rounded-pill px-4 me-2">
-                            Return Home
+                            Kembali ke Beranda
                         </a>
                     </div>
                 </div>

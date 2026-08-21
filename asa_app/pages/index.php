@@ -1,6 +1,29 @@
 <?php
 require_once __DIR__ . '/../../asa_config.php';
 require_once __DIR__ . '/../core/database.php';
+
+// Kampanye aktif
+$campaigns = $pdo->query("
+    SELECT c.*,
+        (
+            SELECT COALESCE(SUM(amount), 0)
+            FROM donations d
+            WHERE d.campaign_id = c.id AND d.status = 'paid'
+        ) AS raised
+    FROM campaigns c
+    WHERE c.status = 'active'
+    ORDER BY c.created_at DESC
+    LIMIT 3
+")->fetchAll();
+
+// Artikel terbaru
+$articles = $pdo->query("
+    SELECT *
+    FROM articles
+    WHERE status = 'published'
+    ORDER BY created_at DESC
+    LIMIT 3
+")->fetchAll();
 ?>
 <!doctype html>
 <html class="no-js" lang="id">
@@ -8,7 +31,7 @@ require_once __DIR__ . '/../core/database.php';
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title><?php echo APP_NAME;?></title>
-        <meta name="description" content="">
+        <meta name="description" content="Asa Palestina - mengumpulkan dan menyalurkan donasi kemanusiaan untuk saudara kita di Palestina. Turunan dari Adara Relief.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -30,37 +53,17 @@ require_once __DIR__ . '/../core/database.php';
                     <div class="single-slider slider-height d-flex align-items-center">
                         <div class="container">
                             <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-8 col-sm-10">
+                                <div class="col-xl-7 col-lg-7 col-md-9 col-sm-10">
                                     <div class="hero__caption">
-                                        <h1 data-animation="fadeInUp" data-delay=".6s">Our Helping to<br> the world.</h1>
-                                        <P data-animation="fadeInUp" data-delay=".8s" >Onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut bore et dolore magnt, sed do eiusmod.</P>
+                                        <span data-animation="fadeInUp" data-delay=".4s">Kemanusiaan untuk Palestina</span>
+                                        <h1 data-animation="fadeInUp" data-delay=".6s">Bangun Asa,<br> Tebar Kepedulian.</h1>
+                                        <p data-animation="fadeInUp" data-delay=".8s">Asa Palestina lahir dari Adara Relief untuk mengumpulkan dan menyalurkan donasi bagi saudara kita yang tertimpa cobaan di Palestina.</p>
                                         <!-- Hero-btn -->
-                                        <div class="hero__btn">
-                                            <a href="industries.html" class="btn hero-btn mb-10"  data-animation="fadeInLeft" data-delay=".8s">Donate</a>
-                                            <a href="industries.html" class="cal-btn ml-15" data-animation="fadeInRight" data-delay="1.0s">
+                                        <div class="hero__btn" data-animation="fadeInUp" data-delay="1s">
+                                            <a href="/donate" class="btn hero-btn mb-10">Donasi Sekarang</a>
+                                            <a href="/about" class="cal-btn ml-15">
                                                 <i class="flaticon-null"></i>
-                                                <p>+12 1325 41</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Slider -->
-                    <div class="single-slider slider-height d-flex align-items-center">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-8 col-sm-10">
-                                    <div class="hero__caption">
-                                        <h1 data-animation="fadeInUp" data-delay=".6s">Our Helping to<br> the world.</h1>
-                                        <P data-animation="fadeInUp" data-delay=".8s" >Onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut bore et dolore magnt, sed do eiusmod.</P>
-                                        <!-- Hero-btn -->
-                                        <div class="hero__btn">
-                                            <a href="industries.html" class="btn hero-btn mb-10"  data-animation="fadeInLeft" data-delay=".8s">Donate</a>
-                                            <a href="industries.html" class="cal-btn ml-15" data-animation="fadeInRight" data-delay="1.0s">
-                                                <i class="flaticon-null"></i>
-                                                <p>+12 1325 41</p>
+                                                <p>Pelajari Tentang Kami</p>
                                             </a>
                                         </div>
                                     </div>
@@ -71,15 +74,16 @@ require_once __DIR__ . '/../core/database.php';
                 </div>
             </div>
             <!-- slider Area End-->
-            <!--? Services Area Start -->
+
+            <!--? Visi Misi Start -->
             <div class="service-area section-padding30">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
+                        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-10">
                             <!-- Section Tittle -->
                             <div class="section-tittle text-center mb-80">
-                                <span>What we are doing</span>
-                                <h2>We Are In A Mission To Help The Helpless</h2>
+                                <span>Apa yang kami lakukan</span>
+                                <h2>Berikhtiar Meringankan Penderitaan</h2>
                             </div>
                         </div>
                     </div>
@@ -90,8 +94,8 @@ require_once __DIR__ . '/../core/database.php';
                                     <span class="flaticon-null-1"></span>
                                 </div>
                                 <div class="cat-cap">
-                                    <h5><a href="services.html">Clean Water</a></h5>
-                                    <p>The sea freight service has grown conside rably in recent years. We spend timetting to know your processes to.</p>
+                                    <h5><a href="/program">Bantuan Kemanusiaan</a></h5>
+                                    <p>Penyaluran pangan, air bersih, obat-obatan, dan kebutuhan darurat bagi warga Palestina yang terdampak konflik.</p>
                                 </div>
                             </div>
                         </div>
@@ -101,8 +105,8 @@ require_once __DIR__ . '/../core/database.php';
                                     <span class="flaticon-think"></span>
                                 </div>
                                 <div class="cat-cap">
-                                    <h5><a href="services.html">Clean Water</a></h5>
-                                    <p>The sea freight service has grown conside rably in recent years. We spend timetting to know your processes to.</p>
+                                    <h5><a href="/program">Pendidikan & Kesehatan</a></h5>
+                                    <p>Mendukung layanan pendidikan dan kesehatan dasar agar anak-anak Palestina tetap memiliki masa depan.</p>
                                 </div>
                             </div>
                         </div>
@@ -112,16 +116,17 @@ require_once __DIR__ . '/../core/database.php';
                                     <span class="flaticon-gear"></span>
                                 </div>
                                 <div class="cat-cap">
-                                    <h5><a href="services.html">Clean Water</a></h5>
-                                    <p>The sea freight service has grown conside rably in recent years. We spend timetting to know your processes to.</p>
+                                    <h5><a href="/program">Transparansi Dana</a></h5>
+                                    <p>Setiap rupiah dilaporkan secara berkala melalui laporan penyaluran agar donatur tenang dan terpercaya.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Services Area End -->
-            <!--? About Law Start-->
+            <!-- Visi Misi End -->
+
+            <!--? About Start-->
             <section class="about-low-area section-padding2">
                 <div class="container">
                     <div class="row">
@@ -129,116 +134,135 @@ require_once __DIR__ . '/../core/database.php';
                             <div class="about-caption mb-50">
                                 <!-- Section Tittle -->
                                 <div class="section-tittle mb-35">
-                                    <span>About our foundetion</span>
-                                    <h2>We Are In A Mission To  Help Helpless</h2>
+                                    <span>Tentang Asa Palestina</span>
+                                    <h2>Kami Ada Karena Kemanusiaan Tak mengenal Batas</h2>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,mod tempor incididunt ut labore et dolore magna aliqua. Utnixm, quis nostrud exercitation ullamc.</p>
-                                <p>Lorem ipvsum dolor sit amext, consectetur adipisicing elit, smod tempor incididunt ut labore et dolore.</p>
+                                <p>Asa Palestina merupakan inisiatif pengumpulan dana donasi yang turunannya berakar dari Adara Relief, lembaga kemanusiaan yang telah lama berkiprah dalam misi kemanusiaan. Kami hadir untuk menjembatani kepedulian Sahabat Asa di Indonesia dengan saudara-saudara di Palestina yang membutuhkan.</p>
+                                <p>Melalui program donasi yang transparan, kami berikhtiar meringankan beban penderitaan dan menumbuhkan asa baru bagi mereka yang tertimpa cobaan.</p>
+                                <a href="/about" class="btn">Pelajari Selengkapnya</a>
                             </div>
-                            <a href="about.html" class="btn">About US</a>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <!-- about-img -->
                             <div class="about-img ">
                                 <div class="about-font-img d-none d-lg-block">
-                                    <img src="assets/img/gallery/about2.png" alt="">
+                                    <img src="assets/img/gallery/about2.png" alt="Asa Palestina">
                                 </div>
                                 <div class="about-back-img ">
-                                    <img src="assets/img/gallery/about1.png" alt="">
+                                    <img src="assets/img/gallery/about1.png" alt="Kemanusiaan Palestina">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- About Law End-->
-            <!-- Our Cases Start -->
+            <!-- About End-->
+
+            <!-- Program Donasi Start -->
             <div class="our-cases-area section-padding30">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
+                        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-10">
                             <!-- Section Tittle -->
                             <div class="section-tittle text-center mb-80">
-                                <span>Our Cases you can see</span>
-                                <h2>Explore our latest causes that we works </h2>
+                                <span>Program donasi kami</span>
+                                <h2>Program yang Sedang Berjalan</h2>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="single-cases mb-40">
-                                <div class="cases-img">
-                                    <img src="assets/img/gallery/case1.png" alt="">
-                                </div>
-                                <div class="cases-caption">
-                                    <h3><a href="#">Ensure Education For Every Poor Children</a></h3>
-                                    <!-- Progress Bar -->
-                                    <div class="single-skill mb-15">
-                                        <div class="bar-progress">
-                                            <div id="bar1" class="barfiller">
-                                                <div class="tipWrap">
-                                                    <span class="tip"></span>
-                                                </div>
-                                                <span class="fill" data-percentage="70"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- / progress -->
-                                    <div class="prices d-flex justify-content-between">
-                                        <p>Raised:<span> $20,000</span></p>
-                                        <p>Goal:<span> $35,000</span></p>
-                                    </div>
-                                </div>
+                        <?php if (empty($campaigns)): ?>
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Belum ada program donasi yang aktif saat ini. Silakan kembali lagi nanti.</p>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="single-cases mb-40">
-                                <div class="cases-img">
-                                    <img src="assets/img/gallery/case2.png" alt="">
-                                </div>
-                                <div class="cases-caption">
-                                    <h3><a href="#">Providing Healthy Food For The Children</a></h3>
-                                    <!-- Progress Bar -->
-                                    <div class="single-skill mb-15">
-                                        <div class="bar-progress">
-                                            <div id="bar2" class="barfiller">
-                                                <div class="tipWrap">
-                                                    <span class="tip"></span>
+                        <?php else: ?>
+                            <?php foreach ($campaigns as $index => $campaign): ?>
+                                <?php
+                                $target = (float) $campaign['target_amount'];
+                                $raised = (float) $campaign['raised'];
+                                $percent = $target > 0 ? min(100, round($raised / $target * 100)) : 0;
+                                $image = $campaign['image']
+                                    ? '/uploads/campaign/' . htmlspecialchars($campaign['image'])
+                                    : 'assets/img/gallery/case' . (($index % 3) + 1) . '.png';
+                                $barId = 'homeBar' . ($index + 1);
+                                ?>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="single-cases mb-40">
+                                        <div class="cases-img">
+                                            <img src="<?php echo $image; ?>" alt="<?php echo htmlspecialchars($campaign['title']); ?>">
+                                        </div>
+                                        <div class="cases-caption">
+                                            <h3><a href="/program"><?php echo htmlspecialchars($campaign['title']); ?></a></h3>
+                                            <!-- Progress Bar -->
+                                            <div class="single-skill mb-15">
+                                                <div class="bar-progress">
+                                                    <div id="<?php echo $barId; ?>" class="barfiller">
+                                                        <div class="tipWrap">
+                                                            <span class="tip"></span>
+                                                        </div>
+                                                        <span class="fill" data-percentage="<?php echo $percent; ?>"></span>
+                                                    </div>
                                                 </div>
-                                                <span class="fill" data-percentage="25"></span>
                                             </div>
+                                            <!-- / progress -->
+                                            <div class="prices d-flex justify-content-between">
+                                                <p>Terkumpul:<span> Rp<?php echo number_format($raised, 0, ',', '.'); ?></span></p>
+                                                <p>Target:<span> Rp<?php echo number_format($target, 0, ',', '.'); ?></span></p>
+                                            </div>
+                                            <a href="/donate" class="btn mt-10 w-100">Donasi Program Ini</a>
                                         </div>
                                     </div>
-                                    <!-- / progress -->
-                                    <div class="prices d-flex justify-content-between">
-                                        <p>Raised:<span> $20,000</span></p>
-                                        <p>Goal:<span> $35,000</span></p>
-                                    </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mt-20">
+                            <a href="/program" class="btn">Lihat Semua Program</a>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="single-cases mb-40">
-                                <div class="cases-img">
-                                    <img src="assets/img/gallery/case3.png" alt="">
-                                </div>
-                                <div class="cases-caption">
-                                    <h3><a href="#">Supply Drinking Water For  The People</a></h3>
-                                    <!-- Progress Bar -->
-                                    <div class="single-skill mb-15">
-                                        <div class="bar-progress">
-                                            <div id="bar3" class="barfiller">
-                                                <div class="tipWrap">
-                                                    <span class="tip"></span>
-                                                </div>
-                                                <span class="fill" data-percentage="50"></span>
-                                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Program Donasi End -->
+
+            <!--? Count Down Start -->
+            <div class="count-down-area pt-25 section-bg" data-background="assets/img/gallery/section_bg02.png">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="count-down-wrapper">
+                                <div class="row justify-content-between">
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <!-- Counter Up -->
+                                        <div class="single-counter text-center">
+                                            <span class="counter color-green">1</span>
+                                            <span class="plus">+</span>
+                                            <p class="color-green">Lembaga Kemanusiaan</p>
                                         </div>
                                     </div>
-                                    <!-- / progress -->
-                                    <div class="prices d-flex justify-content-between">
-                                        <p>Raised:<span> $20,000</span></p>
-                                        <p>Goal:<span> $35,000</span></p>
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <!-- Counter Up -->
+                                        <div class="single-counter text-center">
+                                            <span class="counter color-green">100</span>
+                                            <span class="plus">%</span>
+                                            <p class="color-green">Transparansi Dana</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <!-- Counter Up -->
+                                        <div class="single-counter text-center">
+                                            <span class="counter color-green">3</span>
+                                            <span class="plus">+</span>
+                                            <p class="color-green">Program Donasi</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <!-- Counter Up -->
+                                        <div class="single-counter text-center">
+                                            <span class="counter color-green">1</span>
+                                            <span class="plus">+</span>
+                                            <p class="color-green">Sahabat Asa</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -246,340 +270,81 @@ require_once __DIR__ . '/../core/database.php';
                     </div>
                 </div>
             </div>
-            <!-- Our Cases End -->
-            <!-- Featured_job_start -->
-            <section class="featured-job-area section-padding30 section-bg2" data-background="assets/img/gallery/section_bg03.png">
+            <!-- Count Down End -->
+
+            <!--? Artikel Start -->
+            <section class="home-blog-area section-padding30">
                 <div class="container">
+                    <!-- Section Tittle -->
                     <div class="row justify-content-center">
-                        <div class="col-xl-7 col-lg-9 col-md-10 col-sm-12">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle text-center mb-80">
-                                <span>What we are boing</span>
-                                <h2>We arrange many social events for charity donations</h2>
+                        <div class="col-xl-6 col-lg-7 col-md-9 col-sm-10">
+                            <div class="section-tittle text-center mb-90">
+                                <span>Kabar terbaru</span>
+                                <h2>Artikel & Cerita Kemanusiaan</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#"><img src="assets/img/gallery/socialEvents1.png" alt=""></a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#"><h4>Donation is Hope</h4></a>
-                                        <ul>
-                                            <li><i class="far fa-clock"></i>8:30 - 9:30am</li>
-                                            <li><i class="fas fa-sort-amount-down"></i>18.01.2021</li>
-                                            <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        </ul>
+                    <div class="row">
+                        <?php if (empty($articles)): ?>
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Belum ada artikel yang dipublikasikan.</p>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($articles as $index => $article): ?>
+                                <?php
+                                $image = $article['image']
+                                    ? '/uploads/article/' . htmlspecialchars($article['image'])
+                                    : 'assets/img/gallery/home-blog' . (($index % 2) + 1) . '.png';
+                                $date = date('d M Y', strtotime($article['created_at']));
+                                ?>
+                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                    <div class="home-blog-single mb-30">
+                                        <div class="blog-img-cap">
+                                            <div class="blog-img">
+                                                <img src="<?php echo $image; ?>" alt="<?php echo htmlspecialchars($article['title']); ?>">
+                                                <!-- Blog date -->
+                                                <div class="blog-date text-center">
+                                                    <span><?php echo date('d', strtotime($article['created_at'])); ?></span>
+                                                    <p><?php echo date('M', strtotime($article['created_at'])); ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="blog-cap">
+                                                <p>Asa Palestina</p>
+                                                <h3><a href="/blog_details?slug=<?php echo urlencode($article['slug']); ?>"><?php echo htmlspecialchars($article['title']); ?></a></h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#"><img src="assets/img/gallery/socialEvents2.png" alt=""></a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#"><h4>A hand for Children</h4></a>
-                                        <ul>
-                                            <li><i class="far fa-clock"></i>8:30 - 9:30am</li>
-                                            <li><i class="fas fa-sort-amount-down"></i>18.01.2021</li>
-                                            <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="#"><img src="assets/img/gallery/socialEvents3.png" alt=""></a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="#"><h4>Help for Children</h4></a>
-                                        <ul>
-                                            <li><i class="far fa-clock"></i>8:30 - 9:30am</li>
-                                            <li><i class="fas fa-sort-amount-down"></i>18.01.2021</li>
-                                            <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mt-20">
+                            <a href="/blog" class="btn">Lihat Semua Artikel</a>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- Featured_job_end -->
-            <!--? Team Ara Start -->
-            <div class="team-area pt-160 pb-160">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle section-tittle2 text-center mb-70">
-                                <span>What we are doing</span>
-                                <h2>Our Expert Volunteer Alwyes ready</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-team mb-30">
-                                <div class="team-img">
-                                    <img src="assets/img/gallery/team1.png" alt="">
-                                    <!-- Blog Social -->
-                                    <ul class="team-social">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-globe"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="team-caption">
-                                    <h3><a href="instructor.html">Bruce Roberts</a></h3>
-                                    <p>Volunteer leader</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-team mb-30">
-                                <div class="team-img">
-                                    <img src="assets/img/gallery/team2.png" alt="">
-                                    <!-- Blog Social -->
-                                    <ul class="team-social">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-globe"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="team-caption">
-                                    <h3><a href="instructor.html">Robart Rechard</a></h3>
-                                    <p>Volunteer leader</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-team mb-30">
-                                <div class="team-img">
-                                    <img src="assets/img/gallery/team3.png" alt="">
-                                    <!-- Blog Social -->
-                                    <ul class="team-social">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-globe"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="team-caption">
-                                    <h3><a href="instructor.html">Brendon Tailor</a></h3>
-                                    <p>Volunteer leader</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-team mb-30">
-                                <div class="team-img">
-                                    <img src="assets/img/gallery/team4.png" alt="">
-                                    <!-- Blog Social -->
-                                    <ul class="team-social">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-globe"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="team-caption">
-                                    <h3><a href="instructor.html">Walshr Hasgt</a></h3>
-                                    <p>Volunteer leader</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Team Ara End -->
+            <!-- Artikel End -->
+
             <!-- Want To work -->
             <section class="wantToWork-area ">
                 <div class="container">
                     <div class="wants-wrapper w-padding2  section-bg" data-background="assets/img/gallery/section_bg01.png">
                         <div class="row align-items-center justify-content-between">
-                            <div class="col-xl-5 col-lg-9 col-md-8">
+                            <div class="col-xl-7 col-lg-9 col-md-8">
                                 <div class="wantToWork-caption wantToWork-caption2">
-                                    <h2>Lets Chenge The World With Humanity</h2>
+                                    <h2>Donasimu Adalah Asa Bagi Mereka</h2>
                                 </div>
                             </div>
-                            <div class="col-xl-2 col-lg-3 col-md-4">
-                                <a href="#" class="btn white-btn f-right sm-left">Become A Volunteer</a>
+                            <div class="col-xl-3 col-lg-3 col-md-4">
+                                <a href="/donate" class="btn white-btn f-right sm-left">Donasi Sekarang</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             <!-- Want To work End -->
-            <!--? Testimonial Start -->
-            <div class="testimonial-area testimonial-padding">
-                <div class="container">
-                    <!-- Testimonial contents -->
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-xl-8 col-lg-8 col-md-10">
-                            <div class="h1-testimonial-active dot-style">
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial text-center">
-                                    <div class="testimonial-caption ">
-                                        <!-- founder -->
-                                        <div class="testimonial-founder">
-                                            <div class="founder-img mb-40">
-                                                <img src="assets/img/gallery/testimonial.png" alt="">
-                                                <span>Margaret Lawson</span>
-                                                <p>Creative Director</p>
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-top-cap">
-                                            <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial text-center">
-                                    <div class="testimonial-caption ">
-                                        <!-- founder -->
-                                        <div class="testimonial-founder">
-                                            <div class="founder-img mb-40">
-                                                <img src="assets/img/gallery/testimonial.png" alt="">
-                                                <span>Margaret Lawson</span>
-                                                <p>Creative Director</p>
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-top-cap">
-                                            <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial text-center">
-                                    <div class="testimonial-caption ">
-                                        <!-- founder -->
-                                        <div class="testimonial-founder">
-                                            <div class="founder-img mb-40">
-                                                <img src="assets/img/gallery/testimonial.png" alt="">
-                                                <span>Margaret Lawson</span>
-                                                <p>Creative Director</p>
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-top-cap">
-                                            <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial End -->
-            <!--? Blog Area Start -->
-            <section class="home-blog-area section-padding30">
-                <div class="container">
-                    <!-- Section Tittle -->
-                    <div class="row justify-content-center">
-                        <div class="col-xl-5 col-lg-6 col-md-9 col-sm-10">
-                            <div class="section-tittle text-center mb-90">
-                                <span>Our recent blog</span>
-                                <h2>Latest News from our recent blog</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                            <div class="home-blog-single mb-30">
-                                <div class="blog-img-cap">
-                                    <div class="blog-img">
-                                        <img src="assets/img/gallery/home-blog1.png" alt="">
-                                        <!-- Blog date -->
-                                        <div class="blog-date text-center">
-                                            <span>24</span>
-                                            <p>Now</p>
-                                        </div>
-                                    </div>
-                                    <div class="blog-cap">
-                                        <p>Creative derector</p>
-                                        <h3><a href="blog_details.html">Footprints in Time is perfect House in Kurashiki</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                            <div class="home-blog-single mb-30">
-                                <div class="blog-img-cap">
-                                    <div class="blog-img">
-                                        <img src="assets/img/gallery/home-blog2.png" alt="">
-                                        <!-- Blog date -->
-                                        <div class="blog-date text-center">
-                                            <span>24</span>
-                                            <p>Now</p>
-                                        </div>
-                                    </div>
-                                    <div class="blog-cap">
-                                        <p>Creative derector</p>
-                                        <h3><a href="blog_details.html">Footprints in Time is perfect House in Kurashiki</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Blog Area End -->
-            <!--? Count Down Start -->
-            <div class="count-down-area pt-25 section-bg" data-background="assets/img/gallery/section_bg02.png">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="count-down-wrapper" >
-                                <div class="row justify-content-between">
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">6,200</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">80</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Fund Raised</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">256</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <!-- Counter Up -->
-                                        <div class="single-counter text-center">
-                                            <span class="counter color-green">256</span>
-                                            <span class="plus">+</span>
-                                            <p class="color-green">Donation</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
 
         <?php
@@ -589,5 +354,10 @@ require_once __DIR__ . '/../core/database.php';
         <?php
         require_once __DIR__ . '/../components/body_script.php';
         ?>
+        <script>
+            $(function () {
+                $('.barfiller').barfiller();
+            });
+        </script>
     </body>
 </html>

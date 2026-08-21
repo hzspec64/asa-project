@@ -1,14 +1,21 @@
 <?php
 require_once __DIR__ . '/../../asa_config.php';
 require_once __DIR__ . '/../core/database.php';
+
+$articles = $pdo->query("
+    SELECT *
+    FROM articles
+    WHERE status = 'published'
+    ORDER BY created_at DESC
+")->fetchAll();
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="id">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Blog - <?php echo APP_NAME;?></title>
-        <meta name="description" content="">
+        <title>Artikel - <?php echo APP_NAME;?></title>
+        <meta name="description" content="Artikel, kabar, dan cerita kemanusiaan seputar program donasi Asa Palestina.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php
@@ -29,7 +36,7 @@ require_once __DIR__ . '/../core/database.php';
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="hero-cap hero-cap2 pt-70 text-center">
-                                    <h2>Blog</h2>
+                                    <h2>Artikel</h2>
                                 </div>
                             </div>
                         </div>
@@ -43,151 +50,49 @@ require_once __DIR__ . '/../core/database.php';
                     <div class="row">
                         <div class="col-lg-8 mb-5 mb-lg-0">
                             <div class="blog_left_sidebar">
-                                <article class="blog_item">
-                                    <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="assets/img/blog/single_blog_1.png" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <h3>15</h3>
-                                            <p>Jan</p>
-                                        </a>
+                                <?php if (empty($articles)): ?>
+                                    <div class="col-12 text-center">
+                                        <p class="text-muted">Belum ada artikel yang dipublikasikan.</p>
                                     </div>
-                                    <div class="blog_details">
-                                        <a class="d-inline-block" href="blog_details.html">
-                                            <h2 class="blog-head" style="color: #2d2d2d;">Google inks pact for new 35-storey office</h2>
-                                        </a>
-                                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
-                                        <ul class="blog-info-link">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user"></i> Travel, Lifestyle </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-comments"></i> 03 Comments </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                                <article class="blog_item">
-                                    <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="assets/img/blog/single_blog_2.png" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <h3>15</h3>
-                                            <p>Jan</p>
-                                        </a>
-                                    </div>
-                                    <div class="blog_details">
-                                        <a class="d-inline-block" href="blog_details.html">
-                                            <h2 class="blog-head" style="color: #2d2d2d;">Google inks pact for new 35-storey office</h2>
-                                        </a>
-                                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
-                                        <ul class="blog-info-link">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user"></i> Travel, Lifestyle </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-comments"></i> 03 Comments </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                                <article class="blog_item">
-                                    <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="assets/img/blog/single_blog_3.png" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <h3>15</h3>
-                                            <p>Jan</p>
-                                        </a>
-                                    </div>
-                                    <div class="blog_details">
-                                        <a class="d-inline-block" href="blog_details.html">
-                                            <h2 class="blog-head" style="color: #2d2d2d;">Google inks pact for new 35-storey office</h2>
-                                        </a>
-                                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
-                                        <ul class="blog-info-link">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user"></i> Travel, Lifestyle </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-comments"></i> 03 Comments </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                                <article class="blog_item">
-                                    <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="assets/img/blog/single_blog_4.png" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <h3>15</h3>
-                                            <p>Jan</p>
-                                        </a>
-                                    </div>
-                                    <div class="blog_details">
-                                        <a class="d-inline-block" href="blog_details.html">
-                                            <h2 class="blog-head" style="color: #2d2d2d;">Google inks pact for new 35-storey office</h2>
-                                        </a>
-                                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
-                                        <ul class="blog-info-link">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user"></i> Travel, Lifestyle </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-comments"></i> 03 Comments </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                                <article class="blog_item">
-                                    <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="assets/img/blog/single_blog_5.png" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <h3>15</h3>
-                                            <p>Jan</p>
-                                        </a>
-                                    </div>
-                                    <div class="blog_details">
-                                        <a class="d-inline-block" href="blog_details.html">
-                                            <h2 class="blog-head" style="color: #2d2d2d;">Google inks pact for new 35-storey office</h2>
-                                        </a>
-                                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
-                                        <ul class="blog-info-link">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user"></i> Travel, Lifestyle </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-comments"></i> 03 Comments </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                                <nav class="blog-pagination justify-content-center d-flex">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a href="#" class="page-link" aria-label="Previous">
-                                                <i class="ti-angle-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link" aria-label="Next">
-                                                <i class="ti-angle-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <?php else: ?>
+                                    <?php foreach ($articles as $index => $article): ?>
+                                        <?php
+                                        $image = $article['image']
+                                            ? '/uploads/article/' . htmlspecialchars($article['image'])
+                                            : 'assets/img/blog/single_blog_' . (($index % 5) + 1) . '.png';
+                                        $day = date('d', strtotime($article['created_at']));
+                                        $month = date('M', strtotime($article['created_at']));
+                                        $excerpt = mb_strimwidth(strip_tags($article['content']), 0, 180, '...');
+                                        ?>
+                                        <article class="blog_item">
+                                            <div class="blog_item_img">
+                                                <img class="card-img rounded-0" src="<?php echo $image; ?>" alt="<?php echo htmlspecialchars($article['title']); ?>">
+                                                <a href="/blog_details?slug=<?php echo urlencode($article['slug']); ?>" class="blog_item_date">
+                                                    <h3><?php echo $day; ?></h3>
+                                                    <p><?php echo $month; ?></p>
+                                                </a>
+                                            </div>
+                                            <div class="blog_details">
+                                                <a class="d-inline-block" href="/blog_details?slug=<?php echo urlencode($article['slug']); ?>">
+                                                    <h2 class="blog-head" style="color: #2d2d2d;"><?php echo htmlspecialchars($article['title']); ?></h2>
+                                                </a>
+                                                <p><?php echo htmlspecialchars($excerpt); ?></p>
+                                                <ul class="blog-info-link">
+                                                    <li>
+                                                        <a href="#">
+                                                            <i class="fa fa-user"></i> Asa Palestina
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/blog_details?slug=<?php echo urlencode($article['slug']); ?>">
+                                                            <i class="fa fa-arrow-right"></i> Baca
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </article>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -196,7 +101,7 @@ require_once __DIR__ . '/../core/database.php';
                                     <form action="#">
                                         <div class="form-group">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                                <input type="text" class="form-control" placeholder='Cari artikel' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Cari artikel'">
                                                 <div class="input-group-append">
                                                     <button class="btns" type="button">
                                                         <i class="ti-search"></i>
@@ -204,160 +109,62 @@ require_once __DIR__ . '/../core/database.php';
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Cari</button>
                                     </form>
                                 </aside>
                                 <aside class="single_sidebar_widget post_category_widget">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
+                                    <h4 class="widget_title" style="color: #2d2d2d;">Kategori</h4>
                                     <ul class="list cat-list">
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Resaurant food</p>
-                                                <p>(37)</p>
+                                                <p>Kemanusiaan</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Travel news</p>
-                                                <p>(10)</p>
+                                                <p>Pendidikan</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Modern technology</p>
-                                                <p>(03)</p>
+                                                <p>Kesehatan</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Product</p>
-                                                <p>(11)</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Inspiration</p>
-                                                <p>21</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Health Care (21)</p>
-                                                <p>09</p>
+                                                <p>Penyaluran</p>
                                             </a>
                                         </li>
                                     </ul>
                                 </aside>
+                                <?php if (!empty($articles)): ?>
                                 <aside class="single_sidebar_widget popular_post_widget">
-                                    <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_1.png" alt="post">
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                                            </a>
-                                            <p>January 12, 2019</p>
+                                    <h3 class="widget_title" style="color: #2d2d2d;">Artikel Terbaru</h3>
+                                    <?php foreach (array_slice($articles, 0, 4) as $index => $recent): ?>
+                                        <?php
+                                        $rImage = $recent['image']
+                                            ? '/uploads/article/' . htmlspecialchars($recent['image'])
+                                            : 'assets/img/post/post_' . (($index % 10) + 1) . '.png';
+                                        ?>
+                                        <div class="media post_item">
+                                            <img src="<?php echo $rImage; ?>" alt="post" style="width:80px;height:70px;object-fit:cover;">
+                                            <div class="media-body">
+                                                <a href="/blog_details?slug=<?php echo urlencode($recent['slug']); ?>">
+                                                    <h3 style="color: #2d2d2d;"><?php echo htmlspecialchars(mb_strimwidth($recent['title'], 0, 40, '...')); ?></h3>
+                                                </a>
+                                                <p><?php echo date('d M Y', strtotime($recent['created_at'])); ?></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_2.png" alt="post">
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                                            </a>
-                                            <p>02 Hours ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_3.png" alt="post">
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                                            </a>
-                                            <p>03 Hours ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_4.png" alt="post">
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                                            </a>
-                                            <p>01 Hours ago</p>
-                                        </div>
-                                    </div>
+                                    <?php endforeach; ?>
                                 </aside>
-                                <aside class="single_sidebar_widget tag_cloud_widget">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
-                                    <ul class="list">
-                                        <li>
-                                            <a href="#">project</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">love</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">technology</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">travel</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">restaurant</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">life style</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">design</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">illustration</a>
-                                        </li>
-                                    </ul>
-                                </aside>
-                                <aside class="single_sidebar_widget instagram_feeds">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
-                                    <ul class="instagram_row flex-wrap">
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_5.png" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_6.png" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_7.png" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_8.png" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_9.png" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_10.png" alt="">
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </aside>
+                                <?php endif; ?>
                                 <aside class="single_sidebar_widget newsletter_widget">
                                     <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
                                     <form action="#">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                            <input type="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukkan email'" placeholder='Masukkan email' required>
                                         </div>
-                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
+                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Langganan</button>
                                     </form>
                                 </aside>
                             </div>
