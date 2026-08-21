@@ -1,11 +1,16 @@
 <?php
 require_once __DIR__ . '/../../asa_config.php';
+require_once __DIR__ . '/../core/session.php';
 require_once __DIR__ . '/../core/database.php';
 
 $errors = [];
 
 $name = "";
 $email = "";
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 $stmt = $pdo->query("SELECT COUNT(*) FROM users");
 $userCount = (int) $stmt->fetchColumn();
@@ -16,10 +21,18 @@ if ($userCount > 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
+
+    if (
+        !isset($_POST['csrf_token']) ||
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+    ) {
+        $errors[] = "Invalid request.";
+    }
+
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirm_password'] ?? '';
 
     if ($name === "") {
         $errors[] = "Name is required.";
@@ -44,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $pdo->prepare("
@@ -69,6 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash
         ]);
 
+        unset($_SESSION['csrf_token']);
+
         header('Location: /signin');
         exit;
     }
@@ -80,15 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta charset="UTF-8" />
         <title>Setup - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <?php
-        require_once __DIR__ . '/../components/admin/head_link.php';
-        ?>
+        <?php require_once __DIR__ . '/../components/admin/head_link.php'; ?>
     </head>
-
     <body>
         <div class="container d-flex align-items-center justify-content-center min-vh-100">
-            <div class="card " style="max-width:420px; width:100%;">
+            <div class="card" style="max-width:420px; width:100%;">
                 <div class="card-body p-5">
                     <div class="text-center mb-3">
                         <a href="/" class="mb-4 d-inline-block">
@@ -108,34 +120,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
 
                     <form method="post" class="needs-validation mt-3" novalidate>
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>"
+                        >
+
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full name</label>
-                            <input name="name" id="fullName" type="text" class="form-control" placeholder="Jane Doe" required value="<?= htmlspecialchars($name) ?>">
+                            <input
+                                name="name"
+                                id="fullName"
+                                type="text"
+                                class="form-control"
+                                placeholder="Jane Doe"
+                                required
+                                value="<?= htmlspecialchars($name) ?>"
+                            >
                             <div class="invalid-feedback">Please enter your name.</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required value="<?= htmlspecialchars($email) ?>">
+                            <input
+                                name="email"
+                                id="email"
+                                type="email"
+                                class="form-control"
+                                placeholder="name@example.com"
+                                required
+                                value="<?= htmlspecialchars($email) ?>"
+                            >
                             <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input name="password" id="password" type="password" class="form-control" placeholder="Create a password" required minlength="6">
+                            <input
+                                name="password"
+                                id="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="Create a password"
+                                required
+                                minlength="6"
+                            >
                             <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Confirm password</label>
-                            <input name="confirm_password" id="confirmPassword" type="password" class="form-control" placeholder="Repeat password" required oninput="this.setCustomValidity(document.getElementById('password').value !== this.value ? 'Passwords do not match.' : '')">
+                            <input
+                                name="confirm_password"
+                                id="confirmPassword"
+                                type="password"
+                                class="form-control"
+                                placeholder="Repeat password"
+                                required
+                                oninput="this.setCustomValidity(document.getElementById('password').value !== this.value ? 'Passwords do not match.' : '')"
+                            >
                             <div class="invalid-feedback">Passwords must match.</div>
                         </div>
+
                         <button class="btn btn-success w-100" type="submit">Sign up</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <?php
-        require_once __DIR__ . '/../components/admin/body_script.php';
-        ?>
+        <?php require_once __DIR__ . '/../components/admin/body_script.php'; ?>
     </body>
 </html>

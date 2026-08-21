@@ -8,6 +8,13 @@ $errors = [];
 $email = "";
 $password = "";
 
+// CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrfToken = $_SESSION['csrf_token'];
+
 $stmt = $pdo->query("SELECT COUNT(*) FROM users");
 $userCount = (int) $stmt->fetchColumn();
 
@@ -17,8 +24,18 @@ if ($userCount === 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
+
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $submittedToken = $_POST['csrf_token'] ?? '';
+
+    // CSRF validation
+    if (
+        $submittedToken === '' ||
+        !hash_equals($_SESSION['csrf_token'], $submittedToken)
+    ) {
+        $errors[] = "Invalid request. Please try again.";
+    }
 
     if ($email === "") {
         $errors[] = "Email is required.";
@@ -29,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+
         $stmt = $pdo->prepare("
             SELECT *
             FROM users
@@ -43,13 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user &&
             password_verify($password, $user['password'])
         ) {
+
+            // Prevent session fixation
+            session_regenerate_id(true);
+
             $_SESSION['user'] = $user;
+
+            // Generate a new CSRF token after login
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
             header('Location: /admin');
             exit;
+
         } else {
-            $isError = true;
-            $errorMessage = "Email and/or password is incorrect";
+            $errors[] = "Email and/or password is incorrect.";
         }
     }
 }
@@ -60,15 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta charset="UTF-8" />
         <title>Signin - <?php echo APP_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <?php
         require_once __DIR__ . '/../components/admin/head_link.php';
         ?>
     </head>
-
     <body>
         <div class="container d-flex align-items-center justify-content-center min-vh-100">
-            <div class="card " style="max-width:420px; width:100%;">
+            <div class="card" style="max-width:420px; width:100%;">
                 <div class="card-body p-5">
                     <div class="text-center mb-3">
                         <a href="/" class="mb-4 d-inline-block">
@@ -88,10 +111,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
 
                     <form method="post" class="needs-validation mt-3" novalidate>
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="<?= htmlspecialchars($csrfToken) ?>"
+                        >
+
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus value="<?= htmlspecialchars($email) ?>">
-                            <div class="invalid-feedback">Please enter a valid email.</div>
+                            <input
+                                name="email"
+                                id="email"
+                                type="email"
+                                class="form-control"
+                                placeholder="name@example.com"
+                                required
+                                autofocus
+                                value="<?= htmlspecialchars($email) ?>"
+                            >
+                            <div class="invalid-feedback">
+                                Please enter a valid email.
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -99,11 +139,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span>Password</span>
                                 <a href="#" class="small link-success">Forgot Password?</a>
                             </label>
-                            <input name="password" id="password" type="password" class="form-control" placeholder="Password" required minlength="6">
-                            <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
+                            <input
+                                name="password"
+                                id="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="Password"
+                                required
+                                minlength="6"
+                            >
+                            <div class="invalid-feedback">
+                                Please provide a password (min 6 characters).
+                            </div>
                         </div>
 
-                        <button class="btn btn-success w-100" type="submit">Sign in</button>
+                        <button class="btn btn-success w-100" type="submit">
+                            Sign in
+                        </button>
                     </form>
                 </div>
             </div>
