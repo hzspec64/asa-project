@@ -98,9 +98,9 @@ require_once __DIR__ . '/../core/database.php';
                                 <!-- Section Tittle -->
                                 <div class="section-tittle mb-35">
                                     <span>Kisah kami</span>
-                                    <h2>Turunan dari Adara Relief</h2>
+                                    <h2>Dari Adara Relief</h2>
                                 </div>
-                                <p>Asa Palestina lahir dari kepedulian yang panjang. Kami merupakan turunan dari Adara Relief, lembaga kemanusiaan yang telah berkiprah dalam misi membantu sesama di berbagai wilayah terdampak konflik dan bencana.</p>
+                                <p>Asa Palestina lahir dari kepedulian yang panjang. Kami merupakan lembaga kemanusiaan yang telah berkiprah dalam misi membantu sesama di berbagai wilayah terdampak konflik dan bencana.</p>
                                 <p>Melihat penderitaan yang berkepanjangan di Palestina, kami mengambil ikhtiar khusus untuk mengumpulkan dan menyalurkan donasi secara fokus. Setiap kontribusi Sahabat Asa kami kelola dengan amanah agar dapat memberikan dampak nyata.</p>
                                 <a href="/program" class="btn">Lihat Program Donasi</a>
                             </div>

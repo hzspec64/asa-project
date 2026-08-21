@@ -89,7 +89,7 @@ require_once __DIR__ . '/../../asa_config.php';
                                 <p>
                                 &copy;<script>document.write(new Date().getFullYear());</script> <?php echo APP_NAME;?><br/>
                                 <small>
-                                    Turunan dari Adara Relief &middot; Kemanusiaan untuk Palestina
+                                    Dari Adara Relief &middot; Kemanusiaan untuk Palestina
                                 </small>
                                 </p>
                             </div>

@@ -31,7 +31,7 @@ $articles = $pdo->query("
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title><?php echo APP_NAME;?></title>
-        <meta name="description" content="Asa Palestina - mengumpulkan dan menyalurkan donasi kemanusiaan untuk saudara kita di Palestina. Turunan dari Adara Relief.">
+        <meta name="description" content="Asa Palestina - mengumpulkan dan menyalurkan donasi kemanusiaan untuk saudara kita di Palestina.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <?php

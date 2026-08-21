@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <button type="submit" class="button button-contactForm boxed-btn">Kirim Donasi</button>
                                 </div>
                                 <p class="text-muted mt-3 small">
-                                    Donasi akan dikelola secara amanah dan transparan oleh Asa Palestina, turunan dari Adara Relief.
+                                    Donasi akan dikelola secara amanah dan transparan oleh Asa Palestina.
                                 </p>
                             </form>
                         </div>
