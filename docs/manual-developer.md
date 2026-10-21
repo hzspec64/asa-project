@@ -217,8 +217,8 @@ Ditangani oleh `asa_app/core/image.php` — fungsi `createImageVersions($sumber,
 | Bukti donasi | `public_html/uploads/donation/`     |
 | Galeri       | `public_html/uploads/gallery/`      |
 
-- Nama file disimpan di kolom `image` / `proof_image` pada database; halaman memanggil `/uploads/<tipe>/<image>`.
-- File lama **tidak otomatis terhapus** saat diganti/dihapus record — bersihkan manual bila perlu.
+- Nama file disimpan di kolom `image` / `proof_image` pada database (varian **large**); halaman memanggil `/uploads/<tipe>/<image>`.
+- Saat gambar diganti (edit) atau record dihapus (list admin), 3 varian file lama **otomatis dihapus dari disk** oleh helper `deleteImageVersions()` di `asa_app/core/image.php`.
 
 ---
 
@@ -267,7 +267,8 @@ Koneksi dibuat oleh `asa_app/core/database.php` (PDO, `ERRMODE_EXCEPTION`, fetch
 - Guard: `asa_app/core/guard.php` — semua file di `pages/admin/` wajib me-`require`-nya; belum login → redirect `/signin`.
 - Admin pertama: `asa_app/pages/setup.php` (hanya bisa diakses saat tabel `users` kosong).
 - Logout: `/admin/signout` (`session_destroy`).
-- Form publik (donasi, kontak, signin, setup) memakai CSRF; form admin belum.
+- Form publik (donasi, kontak, signin, setup) **dan form admin** (create/edit/delete) memakai CSRF — helper di `asa_app/core/csrf.php` (`csrfToken()`, `csrfField()`, `csrfVerify()`).
+- Rate limiting login sederhana: setelah 5 percobaan gagal, sesi dikunci 5 menit (`signin.php`).
 - Role `admin`/`staff` tersimpan tapi **belum membedakan hak akses** — semua user login bisa mengakses semua halaman admin.
 
 ---
@@ -296,15 +297,33 @@ Koneksi dibuat oleh `asa_app/core/database.php` (PDO, `ERRMODE_EXCEPTION`, fetch
 
 ---
 
-## 11. Catatan Bug Diketahui
+## 11. Catatan Bug — Sudah Diperbaiki
 
-Dicatat agar tidak terulang / bisa diperbaiki:
+Bug berikut pernah tercatat dan **sudah diperbaiki** (referensi agar tidak terulang):
 
-1. **Kolom `image` bisa berisi teks "Array"** — `createImageVersions()` mengembalikan _array_ 3 nama file, tetapi pemanggil (`create-*.php`/`edit-*.php`) memasukkan `$image` langsung ke query. PDO melempar warning "Array to string conversion" dan menyimpan string `"Array"`. Perbaikan: pilih satu varian, mis. `$image = $hasil['large'];` (atau simpan JSON dan decode saat tampil).
-2. **Upload bukti donasi rusak** — di `admin/create-donation.php` dan `edit-donation.php`, kode memvalidasi `$_FILES['proof_image']` tapi memanggil `createImageVersions($_FILES['image']['tmp_name'], ...)` (key salah) dan menyimpan ke variabel `$image` bukan `$proofImage`.
-3. **Konten artikel tampil ter-escape** — konten Summernote disimpan sebagai HTML, tapi `blog_details.php` me-render dengan `htmlspecialchars(...)` + `nl2br` sehingga tag HTML tampil sebagai teks. Putuskan salah satu: render HTML aman (`strip_tags` dengan whitelist) atau tampilkan plain text.
-4. **Belum ada CSRF pada form admin** dan tidak ada rate limiting login.
-5. **File lama tidak dihapus** saat gambar diganti atau record dihapus.
+1. ~~Kolom `image` berisi teks "Array"~~ — diperbaiki: semua pemanggil `createImageVersions()` kini menyimpan satu varian, `$result['large']`.
+2. ~~Upload bukti donasi rusak~~ — diperbaiki: `create-donation.php`/`edit-donation.php` kini memakai key `$_FILES['proof_image']` dan menyimpan ke `$proofImage`.
+3. ~~Konten artikel tampil ter-escape~~ — diperbaiki: `blog_details.php` me-render HTML Summernote dengan whitelist tag via `strip_tags($content, $allowedTags)` (bukan `htmlspecialchars`).
+4. ~~Belum ada CSRF pada form admin & tanpa rate limiting login~~ — diperbaiki: helper `asa_app/core/csrf.php` dipakai di semua form admin (create/edit/delete) + rate limiting login di `signin.php` (kunci 5 menit setelah 5 gagal).
+5. ~~File lama tidak dihapus~~ — diperbaiki: helper `deleteImageVersions()` menghapus 3 varian file saat gambar diganti (edit) atau record dihapus (list admin).
+
+### Pola yang sudah benar (saat menambah fitur upload baru)
+
+```php
+$result = createImageVersions($tmp, $uploadDir, $filename);
+
+if (!$result) {
+    $errors[] = "Unable to process image.";
+} else {
+    $image = $result['large'];   // simpan SATU varian, bukan array
+}
+```
+
+Saat mengganti/menghapus, panggil:
+
+```php
+deleteImageVersions($uploadDir, $oldImageFromDb);
+```
 
 ---
 

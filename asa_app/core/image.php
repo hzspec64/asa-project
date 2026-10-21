@@ -162,6 +162,25 @@ function createImageVersions($source, $destination, $filename)
 
 
 
+function deleteImageVersions($directory, $storedFilename)
+{
+    if (!$storedFilename || $storedFilename === 'Array') {
+        return;
+    }
+
+    $extension = pathinfo($storedFilename, PATHINFO_EXTENSION);
+    $base = pathinfo($storedFilename, PATHINFO_FILENAME);
+    $base = preg_replace('/-large$/', '', $base);
+
+    foreach (['large', 'small', 'square'] as $version) {
+        $path = $directory . '/' . $base . '-' . $version . '.' . $extension;
+
+        if (is_file($path)) {
+            @unlink($path);
+        }
+    }
+}
+
 function saveImage($image, $path, $mime)
 {
     switch ($mime) {

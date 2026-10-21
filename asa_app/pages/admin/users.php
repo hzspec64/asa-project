@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     $deleteId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 
-    if ($deleteId) {
+    if ($deleteId && csrfVerify()) {
         $deleteStmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
         $deleteStmt->execute([':id' => $deleteId]);
     }
@@ -173,6 +174,7 @@ $users = $stmt->fetchAll();
                                         <?php if ($user['id'] != $_SESSION['user']['id']): ?>
                                         <form action="" method="POST" class="d-inline" onsubmit="return confirm('Hapus pengelola ini?');">
                                             <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken()) ?>">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
                                             <button type="submit"
                                                     class="btn p-0 border-0 bg-transparent link-danger ms-2"

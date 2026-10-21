@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $_POST['action'] ?? '';
 
-    if ($action === 'delete') {
+    if ($action === 'delete' && csrfVerify()) {
 
         $stmt = $pdo->prepare("
             DELETE FROM contacts
@@ -135,6 +136,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             type="hidden"
                                             name="action"
                                             value="delete"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="<?= htmlspecialchars(
+                                                csrfToken()
+                                            ) ?>"
                                         >
 
                                         <button

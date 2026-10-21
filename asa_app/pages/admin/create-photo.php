@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 require_once __DIR__ . '/../../core/image.php';
@@ -11,6 +12,10 @@ $title = "";
 $description = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrfVerify()) {
+        $errors[] = "Invalid request. Please try again.";
+    }
+
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
 
@@ -54,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$result) {
                 $errors[] = "Unable to process image.";
             } else {
-                $image = $result;
+                $image = $result['large'];
             }
         }
     }
@@ -144,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php endif; ?>
 
                                 <form method="post" enctype="multipart/form-data">
+                                    <?= csrfField() ?>
                                     <div class="mb-3">
                                         <label class="form-label">
                                             Photo Title

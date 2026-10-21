@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 require_once __DIR__ . '/../../core/image.php';
@@ -28,6 +29,10 @@ $stmt = $pdo->query("
 $campaigns = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (!csrfVerify()) {
+        $errors[] = "Invalid request. Please try again.";
+    }
 
     $campaignId = $_POST['campaign_id'];
     $donorName = trim($_POST['donor_name']);
@@ -107,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filename = uniqid();
 
             $result = createImageVersions(
-                $_FILES['image']['tmp_name'],
+                $_FILES['proof_image']['tmp_name'],
                 __DIR__ . '/../../../public_html/uploads/donation',
                 $filename
             );
@@ -115,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$result) {
                 $errors[] = "Unable to process image.";
             } else {
-                $image = $result;
+                $proofImage = $result['large'];
             }
         }
     }
@@ -223,6 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php endif; ?>
 
                                 <form method="post" enctype="multipart/form-data">
+                                    <?= csrfField() ?>
                                     <div class="mb-3">
                                         <label class="form-label">Campaign</label>
                                         <select name="campaign_id" class="form-select" required>

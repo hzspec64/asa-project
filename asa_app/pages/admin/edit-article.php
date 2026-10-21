@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 require_once __DIR__ . '/../../core/image.php';
@@ -35,8 +36,13 @@ $title = $article['title'];
 $content = $article['content'];
 $status = $article['status'];
 $image = $article['image'];
+$oldImage = $article['image'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrfVerify()) {
+        $errors[] = "Invalid request. Please try again.";
+    }
+
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
     $status = $_POST['status'];
@@ -109,12 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$result) {
                 $errors[] = "Unable to process image.";
             } else {
-                $image = $result;
+                $image = $result['large'];
             }
         }
     }
 
     if (empty($errors)) {
+        // Remove old image files from disk when replaced
+        if ($oldImage && $image !== $oldImage) {
+            deleteImageVersions(
+                __DIR__ . '/../../../public_html/uploads/article',
+                $oldImage
+            );
+        }
 
         $stmt = $pdo->prepare("
             UPDATE articles
@@ -196,6 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <?php endif; ?>
                                 <form method="post" enctype="multipart/form-data">
+                                    <?= csrfField() ?>
                                     <div class="mb-3">
                                         <label class="form-label">
                                             Title

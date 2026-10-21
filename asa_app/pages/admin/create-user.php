@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
@@ -11,6 +12,10 @@ $email = "";
 $role = "staff";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrfVerify()) {
+        $errors[] = "Invalid request. Please try again.";
+    }
+
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
@@ -144,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php endif; ?>
 
                                 <form method="post">
+                                    <?= csrfField() ?>
                                     <div class="mb-3">
                                         <label class="form-label">Name</label>
                                         <input

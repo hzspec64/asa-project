@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 
@@ -16,7 +17,7 @@ if (
         FILTER_VALIDATE_INT
     );
 
-    if ($deleteId) {
+    if ($deleteId && csrfVerify()) {
 
         $deleteStmt = $pdo->prepare("
             DELETE FROM contacts
@@ -268,6 +269,13 @@ $contacts = $stmt->fetchAll();
                                                         type="hidden"
                                                         name="action"
                                                         value="delete"
+                                                    >
+                                                    <input
+                                                        type="hidden"
+                                                        name="csrf_token"
+                                                        value="<?= htmlspecialchars(
+                                                            csrfToken()
+                                                        ) ?>"
                                                     >
                                                     <input
                                                         type="hidden"

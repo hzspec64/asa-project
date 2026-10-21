@@ -37,6 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Invalid request. Please try again.";
     }
 
+    // Simple login rate limiting: lock for 5 minutes after 5 failed attempts
+    $maxAttempts = 5;
+    $lockSeconds = 300;
+
+    if (
+        !empty($_SESSION['login_locked_until']) &&
+        time() < $_SESSION['login_locked_until']
+    ) {
+        $minutes = (int) ceil(
+            ($_SESSION['login_locked_until'] - time()) / 60
+        );
+        $errors[] = "Too many failed attempts. Please try again in {$minutes} minute(s).";
+    }
+
     if ($email === "") {
         $errors[] = "Email is required.";
     }
@@ -70,11 +84,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Generate a new CSRF token after login
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
+            // Reset login rate limiting
+            unset($_SESSION['login_failed_attempts']);
+            unset($_SESSION['login_locked_until']);
+
             header('Location: /admin');
             exit;
 
         } else {
-            $errors[] = "Email and/or password is incorrect.";
+            $_SESSION['login_failed_attempts'] =
+                ($_SESSION['login_failed_attempts'] ?? 0) + 1;
+
+            if ($_SESSION['login_failed_attempts'] >= $maxAttempts) {
+                $_SESSION['login_locked_until'] = time() + $lockSeconds;
+                $_SESSION['login_failed_attempts'] = 0;
+                $errors[] = "Too many failed attempts. Please try again in 5 minute(s).";
+            } else {
+                $errors[] = "Email and/or password is incorrect.";
+            }
         }
     }
 }

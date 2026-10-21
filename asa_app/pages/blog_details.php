@@ -110,7 +110,14 @@ if (!$article) {
                                         </li>
                                     </ul>
                                     <div class="mt-3">
-                                        <?php echo nl2br(htmlspecialchars($article['content'])); ?>
+                                        <?php
+                                        // Render Summernote HTML safely: keep only whitelisted tags
+                                        $allowedTags = '<p><br><b><strong><i><em><u><s><ul><ol><li>'
+                                            . '<h1><h2><h3><h4><h5><h6><blockquote><hr>'
+                                            . '<a><img><table><thead><tbody><tr><td><th>'
+                                            . '<figure><figcaption><span><div><pre><code>';
+                                        echo strip_tags($article['content'], $allowedTags);
+                                        ?>
                                     </div>
                                 </div>
                             </div>

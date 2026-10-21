@@ -1,15 +1,28 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
+require_once __DIR__ . '/../../core/image.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     $deleteId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 
-    if ($deleteId) {
+    if ($deleteId && csrfVerify()) {
+        $deleteStmt = $pdo->prepare("SELECT proof_image FROM donations WHERE id = :id");
+        $deleteStmt->execute([':id' => $deleteId]);
+        $oldImage = $deleteStmt->fetchColumn();
+
         $deleteStmt = $pdo->prepare("DELETE FROM donations WHERE id = :id");
         $deleteStmt->execute([':id' => $deleteId]);
+
+        if ($oldImage) {
+            deleteImageVersions(
+                __DIR__ . '/../../../public_html/uploads/donation',
+                $oldImage
+            );
+        }
     }
 
     // Redirect back to the same page (preserving page number if present)
@@ -200,6 +213,7 @@ $donations = $stmt->fetchAll();
                                             </a>
                                             <form action="" method="POST" class="d-inline" onsubmit="return confirm('Hapus donasi ini?');">
                                                 <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken()) ?>">
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($donation['id']) ?>">
                                                 <button type="submit"
                                                         class="btn p-0 border-0 bg-transparent link-danger ms-2"

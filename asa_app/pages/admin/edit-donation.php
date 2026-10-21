@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../asa_config.php';
 require_once __DIR__ . '/../../core/session.php';
+require_once __DIR__ . '/../../core/csrf.php';
 require_once __DIR__ . '/../../core/guard.php';
 require_once __DIR__ . '/../../core/database.php';
 require_once __DIR__ . '/../../core/image.php';
@@ -47,6 +48,7 @@ $status = $donation['status'];
 $note = $donation['note'];
 
 $proofImage = $donation['proof_image'];
+$oldProofImage = $donation['proof_image'];
 
 // Load campaigns
 $stmt = $pdo->query("
@@ -60,6 +62,10 @@ $stmt = $pdo->query("
 $campaigns = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrfVerify()) {
+        $errors[] = "Invalid request. Please try again.";
+    }
+
     $campaignId = $_POST['campaign_id'];
     $donorName = trim($_POST['donor_name']);
     $donorEmail = trim($_POST['donor_email']);
@@ -141,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filename = uniqid();
 
             $result = createImageVersions(
-                $_FILES['image']['tmp_name'],
+                $_FILES['proof_image']['tmp_name'],
                 __DIR__ . '/../../../public_html/uploads/donation',
                 $filename
             );
@@ -149,12 +155,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$result) {
                 $errors[] = "Unable to process image.";
             } else {
-                $image = $result;
+                $proofImage = $result['large'];
             }
         }
     }
 
     if (empty($errors)) {
+        // Remove old proof image files from disk when replaced
+        if ($oldProofImage && $proofImage !== $oldProofImage) {
+            deleteImageVersions(
+                __DIR__ . '/../../../public_html/uploads/donation',
+                $oldProofImage
+            );
+        }
+
         $stmt = $pdo->prepare("
             UPDATE donations
             SET
@@ -245,6 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php endif; ?>
 
                                 <form method="post" enctype="multipart/form-data">
+                                    <?= csrfField() ?>
                                     <div class="mb-3">
                                         <label class="form-label">Campaign</label>
                                         <select name="campaign_id" class="form-select" required>
